@@ -1,3 +1,6 @@
+## 0.2.1
+
+* Allow custom toolbar to be passed as named paramter.
 ## 0.2.0
 
 * Add features auto preview WYSIWYG if the editor unfocused [#4](https://github.com/zahniar88/simple_markdown_editor/issues/4).

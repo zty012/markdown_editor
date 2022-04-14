@@ -1,5 +1,6 @@
 # simple_markdown_editor
 
+This is a fork of [simple_markdown_editor by zahnia88](https://github.com/zahniar88/simple_markdown_editor)
 
 [![Support Me](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://paypal.me/zahniaradirahman?locale.x=en_US)
 [![Support Me](https://img.shields.io/badge/Donate-Saweria-orange.svg)](https://saweria.co/zahniar88)
@@ -11,9 +12,10 @@
 Simple markdown editor library For flutter. 
 For demo video, you can see it at this url [Demo](https://youtu.be/aYBeXXDoNPo)
 
-## What's new (21/01/2022)
+## What's new (14/04/2022)
 
-* Auto preview if editor unfocused, request from issue [#4](https://github.com/zahniar88/simple_markdown_editor/issues/4)
+* Allow custom toolbar to be passed as named paramter.
+
 
 ## Features
 - [x] Convert to Bold, Italic, Strikethrough
@@ -91,5 +93,20 @@ MarkdownParse(
 )
 ```
 
+You can also pass custom toolbar to the editor which is a widget.
+The enableToolBar must set to true for visible toolbar `enableToolBar: true`
+
+```dart
+MarkdownFormField(
+    controller: _controller,
+    enableToolBar: true,
+    emojiConvert: true,
+    autoCloseAfterSelectEmoji: false,
+    toolbar: Container(
+        // your own widgets here...
+        // see more refer https://github.com/fossfreaks/simple_markdown_editor/blob/main/lib/widgets/markdown_toolbar.dart
+    ),
+)
+```
 
 ___
