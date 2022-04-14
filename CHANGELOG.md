@@ -1,3 +1,5 @@
+## 0.2.4
+* Fixed incorrect Implementation for toolbar widget
 ## 0.2.3
 * Refactor the package name to `simple_markdown_editor_plus`
 
