@@ -18,6 +18,7 @@ class MarkdownFormField extends StatefulWidget {
     this.readOnly = false,
     this.cursorColor,
     this.focusNode,
+    this.toolbar,
     this.padding = const EdgeInsets.all(10),
   }) : super(key: key);
 
@@ -117,6 +118,17 @@ class MarkdownFormField extends StatefulWidget {
   /// The amount of space by which to inset the child.
   final EdgeInsetsGeometry padding;
 
+  /// The toolbar widget to display when the toolbar is enabled
+  ///
+  /// When no toolbar widget is provided, the default toolbar will be displayed
+  /// which contains bold, italic, underline, strikethrough, link and emoji options
+  /// [MarkdownToolbar] is the default toolbar widget, which has grey[200] color
+  ///
+  /// If you need to customize the toolbar widget, you can provide your own toolbar widget
+  /// For reference take a look at [MarkdownToolbar]
+  ///
+  final Widget? toolbar;
+
   @override
   _MarkdownFormFieldState createState() => _MarkdownFormFieldState();
 }
@@ -175,22 +187,24 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
 
               // show toolbar
               if (!widget.readOnly)
-                MarkdownToolbar(
-                  key: const ValueKey<String>("zmarkdowntoolbar"),
-                  controller: _internalController,
-                  autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
-                  isEditorFocused: (bool status) {
-                    _focused = status;
-                    setState(() {});
-                  },
-                  onPreviewChanged: () {
-                    _focused = _focused ? false : true;
-                    FocusScope.of(context).unfocus();
-                    setState(() {});
-                  },
-                  focusNode: _internalFocus,
-                  emojiConvert: widget.emojiConvert,
-                ),
+                widget.toolbar ??
+                    MarkdownToolbar(
+                      key: const ValueKey<String>("zmarkdowntoolbar"),
+                      controller: _internalController,
+                      autoCloseAfterSelectEmoji:
+                          widget.autoCloseAfterSelectEmoji,
+                      isEditorFocused: (bool status) {
+                        _focused = status;
+                        setState(() {});
+                      },
+                      onPreviewChanged: () {
+                        _focused = _focused ? false : true;
+                        FocusScope.of(context).unfocus();
+                        setState(() {});
+                      },
+                      focusNode: _internalFocus,
+                      emojiConvert: widget.emojiConvert,
+                    ),
             ],
           );
   }
