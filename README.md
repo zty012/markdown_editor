@@ -12,7 +12,7 @@ For demo video, you can see it at this url [Demo](https://youtu.be/aYBeXXDoNPo)
 
 ## What's new (14/04/2022)
 
-* Allow custom toolbar to be passed as named paramter.
+* Allow use of custom background color for tool bar.
 
 
 ## Features
@@ -91,8 +91,7 @@ MarkdownParse(
 )
 ```
 
-You can also pass custom toolbar to the editor which is a widget.
-The enableToolBar must set to true for visible toolbar `enableToolBar: true`
+Make sure to enable toolbar `enableToolBar: true`, in order to set the colors
 
 ```dart
 MarkdownFormField(
@@ -100,10 +99,10 @@ MarkdownFormField(
     enableToolBar: true,
     emojiConvert: true,
     autoCloseAfterSelectEmoji: false,
-    toolbar: Container(
-        // your own widgets here...
-        // see more refer https://github.com/fossfreaks/simple_markdown_editor/blob/main/lib/widgets/markdown_toolbar.dart
-    ),
+    // toolbar's background color, text color will be based on theme
+    toolbarBackground: Colors.blue,
+    // toolbar's expandable widget colors like headings, ordering
+    expandableBackground: Colors.blue[200],
 )
 ```
 

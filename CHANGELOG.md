@@ -1,3 +1,5 @@
+## 0.2.5
+* Added background color for expandable toolbar titles too
 ## 0.2.4
 * Fixed incorrect Implementation for toolbar widget
 ## 0.2.3
