@@ -1,3 +1,6 @@
+## 0.2.3
+* Refactor the package name to `simple_markdown_editor_plus`
+
 ## 0.2.2
 
 * Updated the badges, just meta data update, can be ignored.
