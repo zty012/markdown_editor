@@ -144,7 +144,7 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "1.8.0"
-  simple_markdown_editor:
+  simple_markdown_editor_plus:
     dependency: "direct dev"
     description:
       path: ".."

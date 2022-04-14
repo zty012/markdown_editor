@@ -1,6 +1,6 @@
-name: simple_markdown_editor
+name: simple_markdown_editor_plus
 description: A TextField Widget that allow you to convert easily what's in the
-  TextField to Markdown.
+  TextField to Markdown with custom toolbar support.
 version: 0.2.1
 homepage: https://github.com/fossfreaks/simple_markdown_editor
 repository: https://github.com/fossfreaks/simple_markdown_editor
