@@ -4,7 +4,7 @@ This is a fork of [simple_markdown_editor by zahnia88](https://github.com/zahnia
 
 [![GitHub stars](https://img.shields.io/github/stars/zahniar88/simple_markdown_editor?color=green)](https://github.com/fossfreaks/simple_markdown_editor)
 [![undo](https://img.shields.io/pub/v/simple_markdown_editor.svg?color=teal)](https://pub.dev/packages/simple_markdown_editor_plus)
-![GitHub](https://img.shields.io/github/license/zahniar88/simple_markdown_editor?color=red)
+![GitHub](https://img.shields.io/github/license/fossfreaks/simple_markdown_editor?color=red)
 
 
 Simple markdown editor library For flutter. 
@@ -16,12 +16,12 @@ For demo video, you can see it at this url [Demo](https://youtu.be/aYBeXXDoNPo)
 
 
 ## Features
-- [x] Convert to Bold, Italic, Strikethrough
-- [x] Convert to Code, Quote, Links
-- [x] Convert to Heading (H1, H2, H3).
-- [x] Convert to unorder list and checkbox list
-- [x] Support multiline convert
-- [x] Support auto convert emoji
+- ✅ Convert to Bold, Italic, Strikethrough
+- ✅ Convert to Code, Quote, Links
+- ✅ Convert to Heading (H1, H2, H3).
+- ✅ Convert to unorder list and checkbox list
+- ✅ Support multiline convert
+- ✅ Support auto convert emoji
 
 ## Usage
 

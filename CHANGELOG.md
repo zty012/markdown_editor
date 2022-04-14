@@ -1,3 +1,6 @@
+## 0.2.2
+
+* Updated the badges, just meta data update, can be ignored.
 ## 0.2.1
 
 * Allow custom toolbar to be passed as named paramter.
