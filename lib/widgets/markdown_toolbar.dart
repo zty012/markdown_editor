@@ -15,6 +15,7 @@ class MarkdownToolbar extends StatelessWidget {
     required this.isEditorFocused,
     this.autoCloseAfterSelectEmoji = true,
     this.toolbarBackground,
+    this.expandableBackground,
   })  : toolbar = Toolbar(
           controller: controller,
           focusNode: focusNode,
@@ -30,6 +31,7 @@ class MarkdownToolbar extends StatelessWidget {
   final Toolbar toolbar;
   final ValueChanged<bool> isEditorFocused;
   final Color? toolbarBackground;
+  final Color? expandableBackground;
 
   @override
   Widget build(BuildContext context) {
@@ -86,6 +88,7 @@ class MarkdownToolbar extends StatelessWidget {
               key: const ValueKey<String>("toolbar_heading_action"),
               icon: FontAwesomeIcons.heading,
               isExpandable: true,
+              expandableBackground: expandableBackground,
               items: [
                 ToolbarItem(
                   key: const ValueKey<String>("h1"),
@@ -117,6 +120,7 @@ class MarkdownToolbar extends StatelessWidget {
               key: const ValueKey<String>("toolbar_checkbox_list_action"),
               icon: FontAwesomeIcons.tasks,
               isExpandable: true,
+              expandableBackground: expandableBackground,
               items: [
                 ToolbarItem(
                   key: const ValueKey<String>("checkbox"),

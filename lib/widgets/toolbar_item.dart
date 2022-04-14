@@ -10,6 +10,7 @@ class ToolbarItem extends StatelessWidget {
     this.tooltip,
     this.isExpandable = false,
     this.items,
+    this.expandableBackground,
   }) : super(key: key);
 
   final dynamic icon;
@@ -17,6 +18,7 @@ class ToolbarItem extends StatelessWidget {
   final String? tooltip;
   final bool isExpandable;
   final List? items;
+  final Color? expandableBackground;
 
   @override
   Widget build(BuildContext context) {
@@ -63,7 +65,7 @@ class ToolbarItem extends StatelessWidget {
                 ),
               ),
               expanded: Container(
-                color: Colors.white,
+                color: expandableBackground ?? Colors.white,
                 child: SingleChildScrollView(
                   scrollDirection: Axis.horizontal,
                   physics: const NeverScrollableScrollPhysics(),

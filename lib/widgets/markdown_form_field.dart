@@ -19,6 +19,7 @@ class MarkdownFormField extends StatefulWidget {
     this.cursorColor,
     this.focusNode,
     this.toolbarBackground,
+    this.expandableBackground,
     this.padding = const EdgeInsets.all(10),
   }) : super(key: key);
 
@@ -126,6 +127,14 @@ class MarkdownFormField extends StatefulWidget {
   ///
   final Color? toolbarBackground;
 
+  /// The toolbar widget to display when the toolbar is enabled
+  ///
+  /// When no toolbarBackground widget is provided, the default toolbar color will be displayed
+  /// which has white color
+  ///
+  ///
+  final Color? expandableBackground;
+
   @override
   _MarkdownFormFieldState createState() => _MarkdownFormFieldState();
 }
@@ -202,6 +211,7 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
                         focusNode: _internalFocus,
                         emojiConvert: widget.emojiConvert,
                         toolbarBackground: widget.toolbarBackground,
+                        expandableBackground: widget.expandableBackground,
                       )
                     : MarkdownToolbar(
                         key: const ValueKey<String>("zmarkdowntoolbar"),
