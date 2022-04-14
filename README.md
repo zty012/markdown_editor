@@ -2,10 +2,8 @@
 
 This is a fork of [simple_markdown_editor by zahnia88](https://github.com/zahniar88/simple_markdown_editor)
 
-[![Support Me](https://img.shields.io/badge/Donate-Paypal-blue.svg)](https://paypal.me/zahniaradirahman?locale.x=en_US)
-[![Support Me](https://img.shields.io/badge/Donate-Saweria-orange.svg)](https://saweria.co/zahniar88)
-[![GitHub stars](https://img.shields.io/github/stars/zahniar88/simple_markdown_editor?color=green)](https://github.com/zahniar88/simple_markdown_editor)
-[![undo](https://img.shields.io/pub/v/simple_markdown_editor.svg?color=teal)](https://pub.dev/packages/simple_markdown_editor)
+[![GitHub stars](https://img.shields.io/github/stars/zahniar88/simple_markdown_editor?color=green)](https://github.com/fossfreaks/simple_markdown_editor)
+[![undo](https://img.shields.io/pub/v/simple_markdown_editor.svg?color=teal)](https://pub.dev/packages/simple_markdown_editor_plus)
 ![GitHub](https://img.shields.io/github/license/zahniar88/simple_markdown_editor?color=red)
 
 
