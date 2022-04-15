@@ -29,7 +29,7 @@ Add dependencies to your `pubspec.yaml`
 
 ```yaml
 dependencies:
-    simple_markdown_editor: ^latest
+    simple_markdown_editor_plus: ^0.2.6
 ```
 
 Run `flutter pub get` to install.

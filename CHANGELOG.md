@@ -1,3 +1,5 @@
+## 0.2.6
+* Updated meta, optional update
 ## 0.2.5
 * Added background color for expandable toolbar titles too
 ## 0.2.4
