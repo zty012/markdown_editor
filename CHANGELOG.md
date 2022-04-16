@@ -1,6 +1,8 @@
+## 0.2.8
+* Added validator and decoration parameters
+
 ## 0.2.7
 * refactor package to `markdown_editor_plus`
-* Added validator and decoration parameters
 
 ## 0.2.6
 * Updated meta, optional update
