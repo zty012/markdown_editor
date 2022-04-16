@@ -20,9 +20,11 @@ class MarkdownFormField extends StatefulWidget {
     this.focusNode,
     this.toolbarBackground,
     this.expandableBackground,
-    this.validator,
+    this.maxLines = 1,
+    this.minLines,
+    this.expands = false,
     this.decoration = const InputDecoration(hintText: 'Type here...'),
-    this.padding = const EdgeInsets.all(10),
+    this.padding = const EdgeInsets.all(8),
   }) : super(key: key);
 
   /// For enable toolbar options
@@ -141,8 +143,9 @@ class MarkdownFormField extends StatefulWidget {
   /// Add label, hint etc
   final InputDecoration decoration;
 
-  /// Validate your forms
-  final String? Function(String?)? validator;
+  final int? maxLines;
+  final int? minLines;
+  final bool expands;
 
   @override
   _MarkdownFormFieldState createState() => _MarkdownFormFieldState();
@@ -257,8 +260,10 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
       style: widget.style,
       textCapitalization: widget.textCapitalization,
       padding: widget.padding,
+      maxLines: widget.maxLines,
+      minLines: widget.minLines,
+      expands: widget.expands,
       decoration: widget.decoration,
-      validator: widget.validator,
     );
   }
 }

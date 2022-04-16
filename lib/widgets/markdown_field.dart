@@ -14,9 +14,11 @@ class MarkdownField extends StatelessWidget {
     this.readOnly = false,
     this.cursorColor,
     this.focusNode,
-    this.validator,
+    this.maxLines = 1,
+    this.minLines,
+    this.expands = false,
     this.decoration = const InputDecoration(hintText: 'Type here...'),
-    this.padding = const EdgeInsets.all(10),
+    this.padding = const EdgeInsets.all(8),
   }) : super(key: key);
 
   /// Controls the text being edited.
@@ -110,16 +112,19 @@ class MarkdownField extends StatelessWidget {
   /// Add label, hint etc
   final InputDecoration decoration;
 
-  /// Validate your forms
-  final String? Function(String?)? validator;
+  final int? maxLines;
+  final int? minLines;
+  final bool expands;
 
   @override
   Widget build(BuildContext context) {
     return Padding(
       padding: padding,
-      child: TextFormField(
+      child: TextField(
         key: const ValueKey<String>("markdown_editor_plus"),
-        maxLines: null,
+        maxLines: maxLines,
+        minLines: minLines,
+        expands: expands,
         focusNode: focusNode,
         controller: controller,
         scrollController: scrollController,
@@ -131,7 +136,6 @@ class MarkdownField extends StatelessWidget {
         readOnly: readOnly,
         cursorColor: cursorColor,
         style: style,
-        validator: validator,
         inputFormatters: [
           if (emojiConvert) EmojiInputFormatter(),
         ],
