@@ -109,13 +109,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.0.0"
-  markdown_editor:
+  markdown_editor_plus:
     dependency: "direct dev"
     description:
       path: ".."
       relative: true
     source: path
-    version: "0.2.6+1"
+    version: "0.2.7"
   matcher:
     dependency: transitive
     description:

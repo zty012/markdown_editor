@@ -1,4 +1,4 @@
-# Markdown Editor
+# Markdown Editor Plus
 
 This is a fork of [simple_markdown_editor by zahnia88](https://github.com/zahniar88/simple_markdown_editor)
 with contributions from [fossfreaks](https://github.com/fossfreaks)
@@ -30,7 +30,7 @@ Add dependencies to your `pubspec.yaml`
 
 ```yaml
 dependencies:
-    markdown_editor: ^latest
+    markdown_editor_plus: ^latest
 ```
 
 Run `flutter pub get` to install.
@@ -40,7 +40,7 @@ Run `flutter pub get` to install.
 Import library
 
 ```dart
-import 'package:markdown_editor/markdown_editor.dart';
+import 'package:markdown_editor_plus/markdown_editor_plus.dart';
 ```
 
 Initialize controller and focus node. These controllers and focus nodes are optional because if you don't create them, the editor will create them themselves

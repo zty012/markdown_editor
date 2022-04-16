@@ -1,9 +1,9 @@
-name: markdown_editor
+name: markdown_editor_plus
 description: A TextField Widget that allow you to convert easily what's in the
   TextField to Markdown with custom toolbar support.
-version: 0.2.6+1
-homepage: https://github.com/OmkarDabade/markdown_editor
-repository: https://github.com/OmkarDabade/markdown_editor
+version: 0.2.7
+homepage: https://github.com/OmkarDabade/markdown_editor_plus
+repository: https://github.com/OmkarDabade/markdown_editor_plus
 
 environment:
   sdk: ">=2.12.0 <3.0.0"
