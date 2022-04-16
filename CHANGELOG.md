@@ -1,3 +1,7 @@
+## 0.2.8+1
+* removed validator
+* added min, max lines and expands parameters
+
 ## 0.2.8
 * Added validator and decoration parameters
 
