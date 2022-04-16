@@ -118,13 +118,13 @@ class MarkdownToolbar extends StatelessWidget {
             // checkbox list
             ToolbarItem(
               key: const ValueKey<String>("toolbar_checkbox_list_action"),
-              icon: FontAwesomeIcons.tasks,
+              icon: FontAwesomeIcons.listCheck,
               isExpandable: true,
               expandableBackground: expandableBackground,
               items: [
                 ToolbarItem(
                   key: const ValueKey<String>("checkbox"),
-                  icon: FontAwesomeIcons.solidCheckSquare,
+                  icon: FontAwesomeIcons.solidSquareCheck,
                   onPressedButton: () {
                     toolbar.action("- [x] ", "");
                   },
@@ -141,7 +141,7 @@ class MarkdownToolbar extends StatelessWidget {
             // emoji
             ToolbarItem(
               key: const ValueKey<String>("toolbar_emoji_action"),
-              icon: FontAwesomeIcons.solidSmile,
+              icon: FontAwesomeIcons.solidFaceSmile,
               onPressedButton: () {
                 _showModalSelectEmoji(context, controller.selection);
               },

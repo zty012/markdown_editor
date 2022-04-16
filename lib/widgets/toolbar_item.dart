@@ -76,7 +76,7 @@ class ToolbarItem extends StatelessWidget {
                         child: const Padding(
                           padding: EdgeInsets.all(8.0),
                           child: Icon(
-                            FontAwesomeIcons.solidTimesCircle,
+                            FontAwesomeIcons.solidCircleXmark,
                             size: 16,
                             color: Colors.red,
                           ),

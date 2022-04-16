@@ -34,7 +34,7 @@ class ImageNetworkMarkdown extends StatelessWidget {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: const [
-            Icon(FontAwesomeIcons.exclamationTriangle),
+            Icon(FontAwesomeIcons.triangleExclamation),
             SizedBox(height: 20),
             Text(
               "Failed Load Image",

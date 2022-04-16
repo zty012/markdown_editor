@@ -177,7 +177,7 @@ class MarkdownParse extends StatelessWidget {
           (bool value) {
             return Icon(
               value
-                  ? FontAwesomeIcons.solidCheckSquare
+                  ? FontAwesomeIcons.solidSquareCheck
                   : FontAwesomeIcons.square,
               size: checkboxIconSize ??
                   Theme.of(context).textTheme.bodyText2?.fontSize,

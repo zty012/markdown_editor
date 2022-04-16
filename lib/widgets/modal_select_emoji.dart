@@ -137,7 +137,7 @@ class _ModalSelectEmojiState extends State<ModalSelectEmoji> {
             child: Row(
               children: [
                 const Icon(
-                  FontAwesomeIcons.search,
+                  FontAwesomeIcons.magnifyingGlass,
                   size: 17,
                 ),
                 const SizedBox(width: 10),
