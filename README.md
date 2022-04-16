@@ -1,10 +1,11 @@
-# simple_markdown_editor_plus
+# Markdown Editor
 
 This is a fork of [simple_markdown_editor by zahnia88](https://github.com/zahniar88/simple_markdown_editor)
+with contributions from [fossfreaks](https://github.com/fossfreaks)
 
-[![GitHub stars](https://img.shields.io/github/stars/zahniar88/simple_markdown_editor?color=green)](https://github.com/fossfreaks/simple_markdown_editor)
+<!-- [![GitHub stars](https://img.shields.io/github/stars/zahniar88/simple_markdown_editor?color=green)](https://github.com/fossfreaks/simple_markdown_editor)
 [![undo](https://img.shields.io/pub/v/simple_markdown_editor_plus.svg?color=teal)](https://pub.dev/packages/simple_markdown_editor_plus)
-![GitHub](https://img.shields.io/github/license/fossfreaks/simple_markdown_editor?color=red)
+![GitHub](https://img.shields.io/github/license/fossfreaks/simple_markdown_editor?color=red) -->
 
 
 Simple markdown editor library For flutter. 
@@ -29,7 +30,7 @@ Add dependencies to your `pubspec.yaml`
 
 ```yaml
 dependencies:
-    simple_markdown_editor_plus: ^0.2.6
+    markdown_editor: ^latest
 ```
 
 Run `flutter pub get` to install.
@@ -39,7 +40,7 @@ Run `flutter pub get` to install.
 Import library
 
 ```dart
-import 'package:simple_markdown_editor_plus/simple_markdown_editor_plus.dart';
+import 'package:markdown_editor/markdown_editor.dart';
 ```
 
 Initialize controller and focus node. These controllers and focus nodes are optional because if you don't create them, the editor will create them themselves
