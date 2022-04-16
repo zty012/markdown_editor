@@ -13,6 +13,7 @@ dependencies:
   flutter:
     sdk: flutter
   expandable: ^5.0.1
+  markdown: ^5.0.0
   flutter_markdown: ^0.6.10
   font_awesome_flutter: ^10.1.0
 
