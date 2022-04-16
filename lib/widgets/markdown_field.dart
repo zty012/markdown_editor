@@ -14,6 +14,8 @@ class MarkdownField extends StatelessWidget {
     this.readOnly = false,
     this.cursorColor,
     this.focusNode,
+    this.validator,
+    this.decoration = const InputDecoration(hintText: 'Type here...'),
     this.padding = const EdgeInsets.all(10),
   }) : super(key: key);
 
@@ -28,7 +30,7 @@ class MarkdownField extends StatelessWidget {
   ///
   /// Only supports text keyboards, other keyboard types will ignore this configuration. Capitalization is locale-aware.
   ///
-  /// Defaults to [TextCapitalization.none]. Must not be null.
+  /// Defaults to [TextCapitalization.sentences]. Must not be null.
   ///
   /// See also:
   /// * [TextCapitalization], for a description of each capitalization behavior.
@@ -104,38 +106,42 @@ class MarkdownField extends StatelessWidget {
   /// The amount of space by which to inset the child.
   final EdgeInsetsGeometry padding;
 
+  /// Customise the decoration of this text field
+  /// Add label, hint etc
+  final InputDecoration decoration;
+
+  /// Validate your forms
+  final String? Function(String?)? validator;
+
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: Padding(
-        padding: padding,
-        child: TextField(
-          key: const ValueKey<String>("zmarkdowneditor"),
-          maxLines: null,
-          focusNode: focusNode,
-          controller: controller,
-          scrollController: scrollController,
-          onChanged: _onEditorChange,
-          onTap: onTap,
-          autocorrect: false,
-          keyboardType: TextInputType.multiline,
-          textCapitalization: textCapitalization,
-          readOnly: readOnly,
-          cursorColor: cursorColor,
-          style: style,
-          inputFormatters: [
-            if (emojiConvert) EmojiInputFormatter(),
-          ],
-          toolbarOptions: const ToolbarOptions(
-            copy: true,
-            paste: true,
-            cut: true,
-            selectAll: true,
-          ),
-          decoration: const InputDecoration.collapsed(
-            hintText: "Type here. . .",
-          ),
+    return Padding(
+      padding: padding,
+      child: TextFormField(
+        key: const ValueKey<String>("markdown_editor_plus"),
+        maxLines: null,
+        focusNode: focusNode,
+        controller: controller,
+        scrollController: scrollController,
+        onChanged: _onEditorChange,
+        onTap: onTap,
+        autocorrect: false,
+        keyboardType: TextInputType.multiline,
+        textCapitalization: textCapitalization,
+        readOnly: readOnly,
+        cursorColor: cursorColor,
+        style: style,
+        validator: validator,
+        inputFormatters: [
+          if (emojiConvert) EmojiInputFormatter(),
+        ],
+        toolbarOptions: const ToolbarOptions(
+          copy: true,
+          paste: true,
+          cut: true,
+          selectAll: true,
         ),
+        decoration: decoration,
       ),
     );
   }

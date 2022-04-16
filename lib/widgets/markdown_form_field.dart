@@ -20,6 +20,8 @@ class MarkdownFormField extends StatefulWidget {
     this.focusNode,
     this.toolbarBackground,
     this.expandableBackground,
+    this.validator,
+    this.decoration = const InputDecoration(hintText: 'Type here...'),
     this.padding = const EdgeInsets.all(10),
   }) : super(key: key);
 
@@ -39,7 +41,7 @@ class MarkdownFormField extends StatefulWidget {
   ///
   /// Only supports text keyboards, other keyboard types will ignore this configuration. Capitalization is locale-aware.
   ///
-  /// Defaults to [TextCapitalization.none]. Must not be null.
+  /// Defaults to [TextCapitalization.sentences]. Must not be null.
   ///
   /// See also:
   /// * [TextCapitalization], for a description of each capitalization behavior.
@@ -135,6 +137,13 @@ class MarkdownFormField extends StatefulWidget {
   ///
   final Color? expandableBackground;
 
+  /// Customise the decoration of this text field
+  /// Add label, hint etc
+  final InputDecoration decoration;
+
+  /// Validate your forms
+  final String? Function(String?)? validator;
+
   @override
   _MarkdownFormFieldState createState() => _MarkdownFormFieldState();
 }
@@ -188,6 +197,7 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
     return !widget.enableToolBar
         ? _editor()
         : Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               _editor(),
 
@@ -247,6 +257,8 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
       style: widget.style,
       textCapitalization: widget.textCapitalization,
       padding: widget.padding,
+      decoration: widget.decoration,
+      validator: widget.validator,
     );
   }
 }
