@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'markdown_field.dart';
-import 'markdown_parse.dart';
+import 'markdown_parse_body.dart';
 import 'markdown_toolbar.dart';
 
 class MarkdownFormField extends StatefulWidget {
@@ -20,7 +20,7 @@ class MarkdownFormField extends StatefulWidget {
     this.focusNode,
     this.toolbarBackground,
     this.expandableBackground,
-    this.maxLines = 1,
+    this.maxLines,
     this.minLines,
     this.expands = false,
     this.decoration = const InputDecoration(hintText: 'Type here...'),
@@ -159,11 +159,11 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
 
   @override
   void initState() {
-    _internalController = widget.controller != null
-        ? widget.controller!
-        : TextEditingController();
-    _internalFocus = widget.focusNode != null ? widget.focusNode! : FocusNode();
-    _internalFocus.addListener(() => _requestFocused());
+    _internalController = widget.controller ?? TextEditingController();
+    _internalFocus = widget.focusNode ?? FocusNode();
+
+    _internalFocus.addListener(_requestFocused);
+
     super.initState();
   }
 
@@ -187,8 +187,8 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
               _internalFocus.requestFocus();
               setState(() {});
             },
-            child: MarkdownParse(
-              key: const ValueKey<String>("zmarkdownparse"),
+            child: MarkdownParseBody(
+              key: const ValueKey<String>("zmarkdown-parse-body"),
               data: _internalController.text == ""
                   ? "Type here. . ."
                   : _internalController.text,

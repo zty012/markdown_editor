@@ -5,10 +5,7 @@ import 'package:markdown/markdown.dart' as md;
 import '../src/markdown_syntax.dart';
 import 'image_network.dart';
 
-typedef MarkdownTapTagCallback = void Function(
-  String name,
-  String fullText,
-);
+typedef MarkdownTapTagCallback = void Function(String name, String fullText);
 
 class MarkdownParse extends StatelessWidget {
   /// Creates a scrolling widget that parses and displays Markdown.
@@ -28,6 +25,7 @@ class MarkdownParse extends StatelessWidget {
     this.imageBuilder,
     this.checkboxBuilder,
     this.builders = const <String, MarkdownElementBuilder>{},
+    this.selectable = false,
     this.inlineSyntaxes,
     this.blockSyntaxes,
     this.checkboxIconSize,
@@ -102,13 +100,15 @@ class MarkdownParse extends StatelessWidget {
   final List<md.InlineSyntax>? inlineSyntaxes;
   final List<md.BlockSyntax>? blockSyntaxes;
 
+  final bool selectable;
+
   @override
   Widget build(BuildContext context) {
     return Markdown(
-      key: const Key("defaultmarkdownformatter"),
+      key: const Key("default-markdown-formatter"),
       data: data,
-      selectable: true,
-      padding: const EdgeInsets.all(10),
+      selectable: selectable,
+      padding: const EdgeInsets.all(8),
       physics: physics,
       controller: controller,
       shrinkWrap: shrinkWrap,
