@@ -1,3 +1,7 @@
+## 0.2.9
+* added non-scrolling markdown parser
+* improved logic for min, max lines in markdownfield
+
 ## 0.2.8+1
 * removed validator
 * added min, max lines and expands parameters
