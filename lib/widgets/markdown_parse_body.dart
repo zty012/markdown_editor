@@ -95,7 +95,8 @@ class MarkdownParseBody extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.all(8.0),
       child: MarkdownBody(
-        key: const Key("default-non-scrolling-markdown-formatter"),
+        key: key,
+        // const Key("default-non-scrolling-markdown-formatter"),
         data: data,
         selectable: selectable,
         shrinkWrap: shrinkWrap,

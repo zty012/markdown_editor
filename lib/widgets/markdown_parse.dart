@@ -105,7 +105,8 @@ class MarkdownParse extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Markdown(
-      key: const Key("default-markdown-formatter"),
+      key: key,
+      // const Key("default-markdown-formatter"),
       data: data,
       selectable: selectable,
       padding: const EdgeInsets.all(8),

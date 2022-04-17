@@ -121,7 +121,8 @@ class MarkdownField extends StatelessWidget {
     return Padding(
       padding: padding,
       child: TextField(
-        key: const ValueKey<String>("markdown_editor_plus"),
+        key: key,
+        // const ValueKey<String>("markdown_editor_plus"),
         maxLines: expands ? null : maxLines,
         minLines: expands ? null : minLines,
         expands: expands,
