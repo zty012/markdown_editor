@@ -3,17 +3,8 @@
 This is a fork of [simple_markdown_editor by zahnia88](https://github.com/zahniar88/simple_markdown_editor)
 with contributions from [fossfreaks](https://github.com/fossfreaks)
 
-<!-- [![GitHub stars](https://img.shields.io/github/stars/zahniar88/simple_markdown_editor?color=green)](https://github.com/fossfreaks/simple_markdown_editor)
-[![undo](https://img.shields.io/pub/v/simple_markdown_editor_plus.svg?color=teal)](https://pub.dev/packages/simple_markdown_editor_plus)
-![GitHub](https://img.shields.io/github/license/fossfreaks/simple_markdown_editor?color=red) -->
-
-
 Simple markdown editor library For flutter. 
 For demo video, you can see it at this url [Demo](https://youtu.be/aYBeXXDoNPo)
-
-## What's new (14/04/2022)
-
-* Allow use of custom background color for tool bar.
 
 
 ## Features
@@ -53,10 +44,9 @@ FocusNode _focusNode = FocusNode();
 Show widget for editor
 
 ```dart
-// editable text with toolbar
+// editable text with toolbar by default
 MarkdownFormField(
     controller: _controller,
-    enableToolBar: true,
     emojiConvert: true,
     autoCloseAfterSelectEmoji: false,
 )
@@ -65,6 +55,7 @@ MarkdownFormField(
 MarkdownField(
     controller: _controller,
     emojiConvert: true,
+    enableToolBar: false,
 )
 ```
 
@@ -92,7 +83,7 @@ MarkdownParse(
 )
 ```
 
-Make sure to enable toolbar `enableToolBar: true`, in order to set the colors
+In order to set the colors
 
 ```dart
 MarkdownFormField(

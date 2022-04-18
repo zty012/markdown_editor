@@ -17,7 +17,7 @@ class ToolbarItem extends StatelessWidget {
   final VoidCallback? onPressedButton;
   final String? tooltip;
   final bool isExpandable;
-  final List? items;
+  final List<Widget>? items;
   final Color? expandableBackground;
 
   @override

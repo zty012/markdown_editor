@@ -17,7 +17,8 @@ class MarkdownField extends StatelessWidget {
     this.maxLines,
     this.minLines,
     this.expands = false,
-    this.decoration = const InputDecoration(hintText: 'Type here...'),
+    this.decoration =
+        const InputDecoration(hintText: 'Type here...', isDense: true),
     this.padding = const EdgeInsets.all(8),
   }) : super(key: key);
 

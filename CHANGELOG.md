@@ -1,3 +1,7 @@
+## 0.2.9+1
+* Temparory fix for buttons not working in web
+* Shift to Parsed Markdown Body and Text Field will not work
+
 ## 0.2.9
 * added non-scrolling markdown parser
 * improved logic for min, max lines in markdownfield

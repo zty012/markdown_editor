@@ -6,6 +6,16 @@ import 'modal_input_url.dart';
 import 'toolbar_item.dart';
 
 class MarkdownToolbar extends StatelessWidget {
+  final VoidCallback onPreviewChanged;
+  final TextEditingController controller;
+  final FocusNode focusNode;
+  final bool emojiConvert;
+  final bool autoCloseAfterSelectEmoji;
+  final Toolbar toolbar;
+  final ValueChanged<bool> isEditorFocused;
+  final Color? toolbarBackground;
+  final Color? expandableBackground;
+
   MarkdownToolbar({
     Key? key,
     required this.onPreviewChanged,
@@ -22,16 +32,6 @@ class MarkdownToolbar extends StatelessWidget {
           isEditorFocused: isEditorFocused,
         ),
         super(key: key);
-
-  final VoidCallback onPreviewChanged;
-  final TextEditingController controller;
-  final FocusNode focusNode;
-  final bool emojiConvert;
-  final bool autoCloseAfterSelectEmoji;
-  final Toolbar toolbar;
-  final ValueChanged<bool> isEditorFocused;
-  final Color? toolbarBackground;
-  final Color? expandableBackground;
 
   @override
   Widget build(BuildContext context) {

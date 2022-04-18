@@ -44,7 +44,6 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           MarkdownFormField(
             controller: _controller,
-            enableToolBar: true,
             emojiConvert: true,
             autoCloseAfterSelectEmoji: false,
             // maxLines: 10,

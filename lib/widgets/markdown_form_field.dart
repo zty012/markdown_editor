@@ -12,7 +12,7 @@ class MarkdownFormField extends StatefulWidget {
     this.style,
     this.emojiConvert = false,
     this.onTap,
-    this.enableToolBar = false,
+    this.enableToolBar = true,
     this.autoCloseAfterSelectEmoji = true,
     this.textCapitalization = TextCapitalization.sentences,
     this.readOnly = false,
@@ -23,7 +23,8 @@ class MarkdownFormField extends StatefulWidget {
     this.maxLines,
     this.minLines,
     this.expands = false,
-    this.decoration = const InputDecoration(hintText: 'Type here...'),
+    this.decoration =
+        const InputDecoration(hintText: 'Type here...', isDense: true),
     this.padding = const EdgeInsets.all(8),
   }) : super(key: key);
 
@@ -162,20 +163,21 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
     _internalController = widget.controller ?? TextEditingController();
     _internalFocus = widget.focusNode ?? FocusNode();
 
-    _internalFocus.addListener(_requestFocused);
+    // _internalFocus.addListener(_requestFocused);
 
     super.initState();
   }
 
-  void _requestFocused() {
-    if (_internalFocus.hasFocus) {
-      _focused = true;
-    } else {
-      _focused = false;
-    }
+  // void _requestFocused() {
+  //   if (_internalFocus.hasFocus) {
+  //     _focused = true;
+  //   } else {
+  //     _focused = false;
+  //   }
+  //   // print('Focus Changed.. $_focused');
 
-    setState(() {});
-  }
+  //   setState(() {});
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -187,11 +189,14 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
               _internalFocus.requestFocus();
               setState(() {});
             },
-            child: MarkdownParseBody(
-              key: const ValueKey<String>("zmarkdown-parse-body"),
-              data: _internalController.text == ""
-                  ? "Type here. . ."
-                  : _internalController.text,
+            child: Align(
+              alignment: Alignment.centerLeft,
+              child: MarkdownParseBody(
+                key: const ValueKey<String>("zmarkdown-parse-body"),
+                data: _internalController.text == ""
+                    ? "Type here. . ."
+                    : _internalController.text,
+              ),
             ),
           );
   }
@@ -201,6 +206,7 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
         ? _editor()
         : Column(
             mainAxisSize: MainAxisSize.min,
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               _editor(),
 
@@ -213,10 +219,12 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
                         autoCloseAfterSelectEmoji:
                             widget.autoCloseAfterSelectEmoji,
                         isEditorFocused: (bool status) {
+                          // print('isEditorFocused...');
                           _focused = status;
                           setState(() {});
                         },
                         onPreviewChanged: () {
+                          // print('onPreviewChanged');
                           _focused = _focused ? false : true;
                           FocusScope.of(context).unfocus();
                           setState(() {});
@@ -232,10 +240,12 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
                         autoCloseAfterSelectEmoji:
                             widget.autoCloseAfterSelectEmoji,
                         isEditorFocused: (bool status) {
+                          // print('isEditorFocused...');
                           _focused = status;
                           setState(() {});
                         },
                         onPreviewChanged: () {
+                          // print('onPreviewChanged');
                           _focused = _focused ? false : true;
                           FocusScope.of(context).unfocus();
                           setState(() {});
