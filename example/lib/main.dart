@@ -43,6 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           MarkdownFormField(
+            decoration: const InputDecoration(
+              hintText: 'Type your markdown string here',
+            ),
             controller: _controller,
             emojiConvert: true,
             autoCloseAfterSelectEmoji: false,

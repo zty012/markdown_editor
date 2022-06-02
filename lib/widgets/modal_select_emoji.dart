@@ -13,7 +13,7 @@ class ModalSelectEmoji extends StatefulWidget {
   final ValueChanged<String>? onChanged;
 
   @override
-  _ModalSelectEmojiState createState() => _ModalSelectEmojiState();
+  State<ModalSelectEmoji> createState() => _ModalSelectEmojiState();
 }
 
 class _ModalSelectEmojiState extends State<ModalSelectEmoji> {

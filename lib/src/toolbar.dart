@@ -46,7 +46,7 @@ class Toolbar {
     TextSelection? textSelection,
   }) {
     if (!focusNode.hasFocus) {
-      isEditorFocused.call(true);
+      isEditorFocused(true);
       focusNode.requestFocus();
     }
 
@@ -118,7 +118,7 @@ class Toolbar {
 
         return index == splitData.length
             ? text.replaceFirst(left, "").replaceFirst(right, "")
-            : text.replaceFirst(left, "").replaceFirst(right, "") + "\n";
+            : "${text.replaceFirst(left, "").replaceFirst(right, "")}\n";
       }
 
       if (text.trim().isEmpty) {

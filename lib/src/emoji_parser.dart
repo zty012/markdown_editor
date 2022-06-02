@@ -194,11 +194,11 @@ class EmojiParser {
     if (matches.isNotEmpty) {
       String result = text;
       matches.toList().forEach((m) {
-        var _m0 = m.group(0);
-        if (_m0 != null) {
-          var _e = EmojiUtil.stripColons(_m0);
-          if (hasName(_e)) {
-            result = result.replaceAll(_m0, get(_e).code);
+        var m0 = m.group(0);
+        if (m0 != null) {
+          var e = EmojiUtil.stripColons(m0);
+          if (hasName(e)) {
+            result = result.replaceAll(m0, get(e).code);
           }
         }
       });
@@ -218,10 +218,10 @@ class EmojiParser {
     if (matches.isNotEmpty) {
       String result = text;
       matches.toList().forEach((m) {
-        var _m0 = m.group(0);
-        if (_m0 != null) {
-          if (hasEmoji(_m0)) {
-            result = result.replaceAll(_m0, getEmoji(_m0).full);
+        var m0 = m.group(0);
+        if (m0 != null) {
+          if (hasEmoji(m0)) {
+            result = result.replaceAll(m0, getEmoji(m0).full);
 
             /// Just a quick hack to clear graphical byte from emoji.
             result = result.replaceAll(

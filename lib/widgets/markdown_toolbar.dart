@@ -6,6 +6,7 @@ import 'modal_input_url.dart';
 import 'toolbar_item.dart';
 
 class MarkdownToolbar extends StatelessWidget {
+  /// Preview/Eye button
   final VoidCallback onPreviewChanged;
   final TextEditingController controller;
   final FocusNode focusNode;
@@ -37,7 +38,7 @@ class MarkdownToolbar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       color: toolbarBackground ?? Colors.grey[200],
-      width: double.infinity,
+      width: double.maxFinite,
       height: 45,
       child: SingleChildScrollView(
         scrollDirection: Axis.horizontal,
@@ -47,17 +48,13 @@ class MarkdownToolbar extends StatelessWidget {
             ToolbarItem(
               key: const ValueKey<String>("toolbar_view_item"),
               icon: FontAwesomeIcons.eye,
-              onPressedButton: () {
-                onPreviewChanged.call();
-              },
+              onPressedButton: onPreviewChanged,
             ),
             // select single line
             ToolbarItem(
               key: const ValueKey<String>("toolbar_selection_action"),
               icon: FontAwesomeIcons.textWidth,
-              onPressedButton: () {
-                toolbar.selectSingleLine();
-              },
+              onPressedButton: toolbar.selectSingleLine,
             ),
             // bold
             ToolbarItem(

@@ -72,7 +72,7 @@ class ModalInputUrl extends StatelessWidget {
                   );
                 } else {
                   if (!value.contains(RegExp(r'https?:\/\/(www.)?([^\s]+)'))) {
-                    value = "http://" + value;
+                    value = "http://$value";
                   }
                   toolbar.action(
                     "$leftText$value)",

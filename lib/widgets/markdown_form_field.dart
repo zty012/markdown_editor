@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'markdown_field.dart';
-import 'markdown_parse_body.dart';
+import 'package:flutter_markdown/flutter_markdown.dart';
+import '../src/emoji_input_formatter.dart';
 import 'markdown_toolbar.dart';
 
 class MarkdownFormField extends StatefulWidget {
@@ -10,22 +10,20 @@ class MarkdownFormField extends StatefulWidget {
     this.scrollController,
     this.onChanged,
     this.style,
-    this.emojiConvert = false,
     this.onTap,
-    this.enableToolBar = true,
-    this.autoCloseAfterSelectEmoji = true,
-    this.textCapitalization = TextCapitalization.sentences,
-    this.readOnly = false,
     this.cursorColor,
     this.focusNode,
     this.toolbarBackground,
     this.expandableBackground,
     this.maxLines,
     this.minLines,
+    this.emojiConvert = false,
+    this.enableToolBar = true,
+    this.autoCloseAfterSelectEmoji = true,
+    this.textCapitalization = TextCapitalization.sentences,
+    this.readOnly = false,
     this.expands = false,
-    this.decoration =
-        const InputDecoration(hintText: 'Type here...', isDense: true),
-    this.padding = const EdgeInsets.all(8),
+    this.decoration = const InputDecoration(isDense: true),
   }) : super(key: key);
 
   /// For enable toolbar options
@@ -121,9 +119,6 @@ class MarkdownFormField extends StatefulWidget {
   /// This happens automatically when the widget is tapped.
   final FocusNode? focusNode;
 
-  /// The amount of space by which to inset the child.
-  final EdgeInsetsGeometry padding;
-
   /// The toolbar widget to display when the toolbar is enabled
   ///
   /// When no toolbarBackground widget is provided, the default toolbar color will be displayed
@@ -144,16 +139,45 @@ class MarkdownFormField extends StatefulWidget {
   /// Add label, hint etc
   final InputDecoration decoration;
 
+  /// The maximum number of lines to show at one time, wrapping if necessary.
+  ///
+  /// This affects the height of the field itself and does not limit the number of lines that can be entered into the field.
+  ///
+  /// If this is 1 (the default), the text will not wrap, but will scroll horizontally instead.
+  ///
+  /// If this is null, there is no limit to the number of lines, and the text container will start with enough vertical space for one line and automatically grow to accommodate additional lines as they are entered, up to the height of its constraints.
+  ///
+  /// If this is not null, the value must be greater than zero, and it will lock the input to the given number of lines and take up enough horizontal space to accommodate that number of lines. Setting [minLines] as well allows the input to grow and shrink between the indicated range.
   final int? maxLines;
+
+  /// The minimum number of lines to occupy when the content spans fewer lines.
+  ///
+  /// This affects the height of the field itself and does not limit the number of lines that can be entered into the field.
+  ///
+  /// If this is null (default), text container starts with enough vertical space for one line and grows to accommodate additional lines as they are entered.
+  ///
+  /// This can be used in combination with [maxLines] for a varying set of behaviors.
+  ///
+  /// If the value is set, it must be greater than zero. If the value is greater than 1, [maxLines] should also be set to either null or greater than this value.
+  ///
+  /// When [maxLines] is set as well, the height will grow between the indicated range of lines. When [maxLines] is null, it will grow as high as needed, starting from [minLines].
   final int? minLines;
+
+  /// Whether this widget's height will be sized to fill its parent.
+  ///
+  /// If set to true and wrapped in a parent widget like [Expanded] or [SizedBox], the input will expand to fill the parent.
+  ///
+  /// [maxLines] and [minLines] must both be null when this is set to true, otherwise an error is thrown.
+  ///
+  /// Defaults to false.
   final bool expands;
 
   @override
-  _MarkdownFormFieldState createState() => _MarkdownFormFieldState();
+  State<MarkdownFormField> createState() => _MarkdownFormFieldState();
 }
 
 class _MarkdownFormFieldState extends State<MarkdownFormField> {
-  // internal parameter
+  // Internal parameter
   late TextEditingController _internalController;
   late FocusNode _internalFocus;
   bool _focused = false;
@@ -163,21 +187,16 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
     _internalController = widget.controller ?? TextEditingController();
     _internalFocus = widget.focusNode ?? FocusNode();
 
-    // _internalFocus.addListener(_requestFocused);
+    _internalFocus.addListener(() {
+      if (!_internalFocus.hasFocus) {
+        setState(() {
+          _focused = false;
+        });
+      }
+    });
 
     super.initState();
   }
-
-  // void _requestFocused() {
-  //   if (_internalFocus.hasFocus) {
-  //     _focused = true;
-  //   } else {
-  //     _focused = false;
-  //   }
-  //   // print('Focus Changed.. $_focused');
-
-  //   setState(() {});
-  // }
 
   @override
   Widget build(BuildContext context) {
@@ -185,13 +204,17 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
         ? _editorOnFocused()
         : GestureDetector(
             onTap: () {
-              _focused = true;
+              // Bring widget in widget tree first
+              setState(() {
+                _focused = true;
+              });
+
+              // Then request for focus when widget is built
               _internalFocus.requestFocus();
-              setState(() {});
             },
             child: Align(
               alignment: Alignment.centerLeft,
-              child: MarkdownParseBody(
+              child: MarkdownBody(
                 key: const ValueKey<String>("zmarkdown-parse-body"),
                 data: _internalController.text == ""
                     ? "Type here. . ."
@@ -212,64 +235,47 @@ class _MarkdownFormFieldState extends State<MarkdownFormField> {
 
               // show toolbar
               if (!widget.readOnly)
-                widget.toolbarBackground != null
-                    ? MarkdownToolbar(
-                        key: const ValueKey<String>("zmarkdowntoolbar"),
-                        controller: _internalController,
-                        autoCloseAfterSelectEmoji:
-                            widget.autoCloseAfterSelectEmoji,
-                        isEditorFocused: (bool status) {
-                          // print('isEditorFocused...');
-                          _focused = status;
-                          setState(() {});
-                        },
-                        onPreviewChanged: () {
-                          // print('onPreviewChanged');
-                          _focused = _focused ? false : true;
-                          FocusScope.of(context).unfocus();
-                          setState(() {});
-                        },
-                        focusNode: _internalFocus,
-                        emojiConvert: widget.emojiConvert,
-                        toolbarBackground: widget.toolbarBackground,
-                        expandableBackground: widget.expandableBackground,
-                      )
-                    : MarkdownToolbar(
-                        key: const ValueKey<String>("zmarkdowntoolbar"),
-                        controller: _internalController,
-                        autoCloseAfterSelectEmoji:
-                            widget.autoCloseAfterSelectEmoji,
-                        isEditorFocused: (bool status) {
-                          // print('isEditorFocused...');
-                          _focused = status;
-                          setState(() {});
-                        },
-                        onPreviewChanged: () {
-                          // print('onPreviewChanged');
-                          _focused = _focused ? false : true;
-                          FocusScope.of(context).unfocus();
-                          setState(() {});
-                        },
-                        focusNode: _internalFocus,
-                        emojiConvert: widget.emojiConvert,
-                      ),
+                MarkdownToolbar(
+                  // key: const ValueKey<String>("zmarkdowntoolbar"),
+                  controller: _internalController,
+                  autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
+                  isEditorFocused: (bool status) {
+                    setState(() {
+                      _focused = status;
+                    });
+                  },
+                  onPreviewChanged: () {
+                    // Remove focus first
+                    FocusScope.of(context).unfocus();
+
+                    // Then remove widget from widget tree
+                    setState(() {
+                      _focused = !_focused;
+                    });
+                  },
+                  focusNode: _internalFocus,
+                  emojiConvert: widget.emojiConvert,
+                  toolbarBackground: widget.toolbarBackground,
+                  expandableBackground: widget.expandableBackground,
+                )
             ],
           );
   }
 
   Widget _editor() {
-    return MarkdownField(
+    return TextField(
       controller: _internalController,
       focusNode: _internalFocus,
       cursorColor: widget.cursorColor,
-      emojiConvert: widget.emojiConvert,
+      inputFormatters: [
+        if (widget.emojiConvert) EmojiInputFormatter(),
+      ],
       onChanged: widget.onChanged,
       onTap: widget.onTap,
       readOnly: widget.readOnly,
       scrollController: widget.scrollController,
       style: widget.style,
       textCapitalization: widget.textCapitalization,
-      padding: widget.padding,
       maxLines: widget.maxLines,
       minLines: widget.minLines,
       expands: widget.expands,

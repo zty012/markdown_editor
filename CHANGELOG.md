@@ -1,3 +1,8 @@
+## 0.2.10
+* Switch between markdown and textfield using focusNode reimplemented
+* Dependency upgrade
+* Using MarkdownBody instead of MarkdownParseBody in MarkdownFormField
+
 ## 0.2.9+1
 * Temparory fix for buttons not working in web
 * Shift to Parsed Markdown Body and Text Field will not work
