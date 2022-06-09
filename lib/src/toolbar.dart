@@ -46,6 +46,8 @@ class Toolbar {
     TextSelection? textSelection,
   }) {
     if (!focusNode.hasFocus) {
+      print('Editor is not in focus');
+
       isEditorFocused(true);
       focusNode.requestFocus();
     }

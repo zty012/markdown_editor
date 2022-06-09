@@ -176,7 +176,7 @@ class MarkdownParse extends StatelessWidget {
           },
       checkboxBuilder: checkboxBuilder ??
           (bool value) {
-            return Icon(
+            return FaIcon(
               value
                   ? FontAwesomeIcons.solidSquareCheck
                   : FontAwesomeIcons.square,
