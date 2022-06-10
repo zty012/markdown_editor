@@ -1,3 +1,9 @@
+## 0.2.11 - 10-June-2022
+* Breaking: MarkdownFormField is now MarkdownAutoPreview
+* Added SplittedMarkdown FormField
+* Example updated
+* Added tootips in markdown toolbar
+
 ## 0.2.10
 * Switch between markdown and textfield using focusNode reimplemented
 * Dependency upgrade

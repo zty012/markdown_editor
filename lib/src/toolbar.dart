@@ -14,20 +14,16 @@ class ToolbarResult {
 
 class Toolbar {
   final TextEditingController controller;
-  final FocusNode focusNode;
-  final ValueChanged<bool> isEditorFocused;
+  final VoidCallback? bringEditorToFocus;
 
-  Toolbar(
-      {required this.controller,
-      required this.focusNode,
-      required this.isEditorFocused});
+  Toolbar({required this.controller, this.bringEditorToFocus});
 
-  // check if have selection text
-  bool checkHasSelection() {
-    return (controller.selection.baseOffset -
-            controller.selection.extentOffset) !=
-        0;
-  }
+  /// Returns true if  controller contains selection text
+  ///
+  /// else returns false
+  bool get hasSelection =>
+      (controller.selection.baseOffset - controller.selection.extentOffset) !=
+      0;
 
   // get selection text pffset
   TextSelection getSelection(TextSelection selection) {
@@ -40,27 +36,27 @@ class Toolbar {
   }
 
   // toolbar action
-  void action(
-    String left,
-    String right, {
-    TextSelection? textSelection,
-  }) {
-    if (!focusNode.hasFocus) {
-      print('Editor is not in focus');
+  void action(String left, String right, {TextSelection? textSelection}) {
+    // Keep this as it is
+    // Dont remove or place in the end
+    bringEditorToFocus?.call();
 
-      isEditorFocused(true);
-      focusNode.requestFocus();
-    }
+    // if (!focusNode.hasFocus) {
+    //   print('Editor is not in focus');
+
+    //   isEditorFocused(true);
+    //   focusNode.requestFocus();
+    // }
 
     // default parameter
-    final currentTextValue = controller.value.text;
-    var selection = textSelection ?? controller.selection;
+    final String currentTextValue = controller.value.text;
+    TextSelection selection = textSelection ?? controller.selection;
     selection = getSelection(selection);
 
-    final middle = selection.textInside(currentTextValue);
-    var selectionText = '$left$middle$right';
-    var baseOffset = left.length + middle.length;
-    var extentOffset = selection.extentOffset + left.length + right.length;
+    final String middle = selection.textInside(currentTextValue);
+    String selectionText = '$left$middle$right';
+    int baseOffset = left.length + middle.length;
+    int extentOffset = selection.extentOffset + left.length + right.length;
 
     // check if middle text have char \n
     if (middle.split("\n").length > 1) {
@@ -80,7 +76,7 @@ class Toolbar {
       extentOffset = selection.extentOffset - (left.length + right.length);
     }
 
-    final newTextValue = selection.textBefore(currentTextValue) +
+    final String newTextValue = selection.textBefore(currentTextValue) +
         selectionText +
         selection.textAfter(currentTextValue);
 
@@ -106,12 +102,12 @@ class Toolbar {
     String right,
     int selection,
   ) {
-    final splitData = middle.split("\n");
-    var index = 0;
-    var resetLength = 0;
-    var addLength = 0;
+    final List<String> splitData = middle.split("\n");
+    int index = 0;
+    int resetLength = 0;
+    int addLength = 0;
 
-    final selectionText = splitData.map((text) {
+    final String selectionText = splitData.map((text) {
       index++;
       addLength += left.length + right.length;
 
@@ -127,12 +123,12 @@ class Toolbar {
         addLength -= left.length + right.length;
       }
 
-      final newText = text.trim().isEmpty ? text : "$left$text$right";
+      final String newText = text.trim().isEmpty ? text : "$left$text$right";
       return index == splitData.length ? newText : "$newText\n";
     }).join();
 
-    final baseOffset = addLength + (middle.length - (resetLength * 2));
-    final extentOffset = selection + addLength - (resetLength * 2);
+    final int baseOffset = addLength + (middle.length - (resetLength * 2));
+    final int extentOffset = selection + addLength - (resetLength * 2);
 
     return ToolbarResult(
       baseOffset: baseOffset,
@@ -142,19 +138,21 @@ class Toolbar {
   }
 
   void selectSingleLine() {
-    var currentPosition = controller.selection;
+    TextSelection currentPosition = controller.selection;
     if (!currentPosition.isValid) {
       currentPosition = currentPosition.copyWith(
         baseOffset: 0,
         extentOffset: 0,
       );
     }
-    var textBefore = currentPosition.textBefore(controller.text);
-    var textAfter = currentPosition.textAfter(controller.text);
+    String textBefore = currentPosition.textBefore(controller.text);
+    String textAfter = currentPosition.textAfter(controller.text);
 
     textBefore = textBefore.split("\n").last;
     textAfter = textAfter.split("\n")[0];
-    final firstTextPosition = controller.text.indexOf(textBefore + textAfter);
+
+    final int firstTextPosition =
+        controller.text.indexOf(textBefore + textAfter);
     controller.value = controller.value.copyWith(
       selection: TextSelection(
         baseOffset: firstTextPosition,

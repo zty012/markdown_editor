@@ -38,17 +38,15 @@ Initialize controller and focus node. These controllers and focus nodes are opti
 
 ```dart
 TextEditingController _controller = TextEditingController();
-FocusNode _focusNode = FocusNode();
 ```
 
 Show widget for editor
 
 ```dart
 // editable text with toolbar by default
-MarkdownFormField(
+MarkdownAutoPreview(
     controller: _controller,
     emojiConvert: true,
-    autoCloseAfterSelectEmoji: false,
 )
 
 // editable text without toolbar
@@ -86,7 +84,7 @@ MarkdownParse(
 In order to set the colors
 
 ```dart
-MarkdownFormField(
+MarkdownAutoPreview(
     controller: _controller,
     enableToolBar: true,
     emojiConvert: true,

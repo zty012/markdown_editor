@@ -3,8 +3,8 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import '../src/emoji_input_formatter.dart';
 import 'markdown_toolbar.dart';
 
-class MarkdownFormField extends StatefulWidget {
-  const MarkdownFormField({
+class SplittedMarkdownFormField extends StatefulWidget {
+  const SplittedMarkdownFormField({
     Key? key,
     this.controller,
     this.scrollController,
@@ -12,17 +12,18 @@ class MarkdownFormField extends StatefulWidget {
     this.style,
     this.onTap,
     this.cursorColor,
-    this.focusNode,
     this.toolbarBackground,
     this.expandableBackground,
     this.maxLines,
     this.minLines,
+    this.validator,
+    this.autovalidateMode,
+    this.onSaved,
+    this.expands = false,
     this.emojiConvert = false,
     this.enableToolBar = true,
     this.autoCloseAfterSelectEmoji = true,
     this.textCapitalization = TextCapitalization.sentences,
-    this.readOnly = false,
-    this.expands = false,
     this.decoration = const InputDecoration(isDense: true),
   }) : super(key: key);
 
@@ -90,13 +91,6 @@ class MarkdownFormField extends StatefulWidget {
   /// the modal will not disappear after you select the emoji
   final bool autoCloseAfterSelectEmoji;
 
-  /// Whether the text can be changed.
-  ///
-  /// When this is set to true, the text cannot be modified by any shortcut or keyboard operation. The text is still selectable.
-  ///
-  /// Defaults to false. Must not be null.
-  final bool readOnly;
-
   /// The color of the cursor.
   ///
   /// The cursor indicates the current location of text insertion point in the field.
@@ -107,32 +101,16 @@ class MarkdownFormField extends StatefulWidget {
   /// [ThemeData.colorScheme].
   final Color? cursorColor;
 
-  /// Defines the keyboard focus for this widget.
-  ///
-  /// The [focusNode] is a long-lived object that's typically managed by a [StatefulWidget] parent. See
-  /// [FocusNode] for more information.
-  ///
-  /// To give the keyboard focus to this widget, provide a [focusNode] and then use the current
-  /// [FocusScope] to request the focus:
-  ///
-  /// FocusScope.of(context).requestFocus(myFocusNode);
-  /// This happens automatically when the widget is tapped.
-  final FocusNode? focusNode;
-
   /// The toolbar widget to display when the toolbar is enabled
   ///
   /// When no toolbarBackground widget is provided, the default toolbar color will be displayed
   /// which has grey[200] color
-  ///
-  ///
   final Color? toolbarBackground;
 
   /// The toolbar widget to display when the toolbar is enabled
   ///
   /// When no toolbarBackground widget is provided, the default toolbar color will be displayed
   /// which has white color
-  ///
-  ///
   final Color? expandableBackground;
 
   /// Customise the decoration of this text field
@@ -172,114 +150,111 @@ class MarkdownFormField extends StatefulWidget {
   /// Defaults to false.
   final bool expands;
 
+  /// Creates a [FormField] that contains a [TextField].
+  ///
+  /// When a [controller] is specified, [initialValue] must be null (the default). If [controller] is null, then a [TextEditingController] will be constructed automatically and its text will be initialized to [initialValue] or the empty string.
+  ///
+  /// For documentation about the various parameters, see the [TextField] class and [TextField.new], the constructor.
+  final String? Function(String?)? validator;
+
+  ///Creates a [FormField] that contains a [TextField].
+  ///
+  /// When a [controller] is specified, [initialValue] must be null (the default). If [controller] is null, then a [TextEditingController] will be constructed automatically and its text will be initialized to [initialValue] or the empty string.
+  ///
+  /// For documentation about the various parameters, see the [TextField] class and [TextField.new], the constructor.
+  final AutovalidateMode? autovalidateMode;
+
+  /// Creates a [FormField] that contains a [TextField].
+  ///
+  /// When a [controller] is specified, [initialValue] must be null (the default). If [controller] is null, then a [TextEditingController] will be constructed automatically and its text will be initialized to [initialValue] or the empty string.
+  ///
+  /// For documentation about the various parameters, see the [TextField] class and [TextField.new], the constructor.
+  final Function(String?)? onSaved;
+
   @override
-  State<MarkdownFormField> createState() => _MarkdownFormFieldState();
+  State<SplittedMarkdownFormField> createState() =>
+      _SplittedMarkdownFormFieldState();
 }
 
-class _MarkdownFormFieldState extends State<MarkdownFormField> {
+class _SplittedMarkdownFormFieldState extends State<SplittedMarkdownFormField> {
   // Internal parameter
   late TextEditingController _internalController;
-  late FocusNode _internalFocus;
-  bool _focused = false;
+  final FocusNode _focusNode = FocusNode();
 
   @override
   void initState() {
     _internalController = widget.controller ?? TextEditingController();
-    _internalFocus = widget.focusNode ?? FocusNode();
-
-    _internalFocus.addListener(() {
-      if (!_internalFocus.hasFocus) {
-        setState(() {
-          _focused = false;
-        });
-      }
-    });
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return _focused
-        ? _editorOnFocused()
-        : GestureDetector(
-            onTap: () {
-              // Bring widget in widget tree first
-              setState(() {
-                _focused = true;
-              });
-
-              // Then request for focus when widget is built
-              _internalFocus.requestFocus();
-            },
-            child: Align(
-              alignment: Alignment.centerLeft,
-              child: MarkdownBody(
-                key: const ValueKey<String>("zmarkdown-parse-body"),
-                data: _internalController.text == ""
-                    ? "Type here. . ."
-                    : _internalController.text,
-              ),
+    return LayoutBuilder(
+      builder: (context, constraints) {
+        return Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              children: [
+                Expanded(
+                  child: TextFormField(
+                    controller: _internalController,
+                    cursorColor: widget.cursorColor,
+                    focusNode: _focusNode,
+                    inputFormatters: [
+                      if (widget.emojiConvert) EmojiInputFormatter(),
+                    ],
+                    onChanged: (value) {
+                      setState(() {});
+                      widget.onChanged?.call(value);
+                    },
+                    onTap: widget.onTap,
+                    scrollController: widget.scrollController,
+                    style: widget.style,
+                    textCapitalization: widget.textCapitalization,
+                    maxLines: widget.maxLines,
+                    minLines: widget.minLines,
+                    expands: widget.expands,
+                    decoration: widget.decoration,
+                    validator: widget.validator,
+                    autovalidateMode: widget.autovalidateMode,
+                    onSaved: widget.onSaved,
+                  ),
+                ),
+                Expanded(
+                  child: MarkdownBody(
+                    // key: const ValueKey<String>("zmarkdown-parse-body"),
+                    data: _internalController.text == ""
+                        ? "**Text in markdown**"
+                        : _internalController.text,
+                  ),
+                ),
+              ],
             ),
-          );
-  }
 
-  Widget _editorOnFocused() {
-    return !widget.enableToolBar
-        ? _editor()
-        : Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              _editor(),
-
-              // show toolbar
-              if (!widget.readOnly)
-                MarkdownToolbar(
-                  // key: const ValueKey<String>("zmarkdowntoolbar"),
-                  controller: _internalController,
-                  autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
-                  isEditorFocused: (bool status) {
-                    setState(() {
-                      _focused = status;
-                    });
-                  },
-                  onPreviewChanged: () {
-                    // Remove focus first
-                    FocusScope.of(context).unfocus();
-
-                    // Then remove widget from widget tree
-                    setState(() {
-                      _focused = !_focused;
-                    });
-                  },
-                  focusNode: _internalFocus,
-                  emojiConvert: widget.emojiConvert,
-                  toolbarBackground: widget.toolbarBackground,
-                  expandableBackground: widget.expandableBackground,
-                )
-            ],
-          );
-  }
-
-  Widget _editor() {
-    return TextField(
-      controller: _internalController,
-      focusNode: _internalFocus,
-      cursorColor: widget.cursorColor,
-      inputFormatters: [
-        if (widget.emojiConvert) EmojiInputFormatter(),
-      ],
-      onChanged: widget.onChanged,
-      onTap: widget.onTap,
-      readOnly: widget.readOnly,
-      scrollController: widget.scrollController,
-      style: widget.style,
-      textCapitalization: widget.textCapitalization,
-      maxLines: widget.maxLines,
-      minLines: widget.minLines,
-      expands: widget.expands,
-      decoration: widget.decoration,
+            // show toolbar
+            if (widget.enableToolBar)
+              MarkdownToolbar(
+                showPreviewButton: false,
+                // key: const ValueKey<String>("zmarkdowntoolbar"),
+                controller: _internalController,
+                autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
+                emojiConvert: widget.emojiConvert,
+                toolbarBackground: widget.toolbarBackground,
+                expandableBackground: widget.expandableBackground,
+                bringEditorToFocus: () {
+                  _focusNode.requestFocus();
+                },
+                onActionCompleted: () {
+                  setState(() {});
+                },
+              )
+          ],
+        );
+      },
     );
   }
 }

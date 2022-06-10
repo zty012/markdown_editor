@@ -25,14 +25,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  final TextEditingController _controller = TextEditingController();
-
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -41,37 +33,21 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-        children: [
-          MarkdownFormField(
-            decoration: const InputDecoration(
-              hintText: 'Type your markdown string here',
+        children: const [
+          MarkdownAutoPreview(
+            decoration: InputDecoration(
+              hintText: 'Markdown Auto Preview',
             ),
-            controller: _controller,
             emojiConvert: true,
-            autoCloseAfterSelectEmoji: false,
             // maxLines: 10,
             // minLines: 1,
             // expands: true,
-            onChanged: (s) {
-              setState(() {});
-            },
           ),
-          SizedBox(
-            height: 100,
-            child: MarkdownParse(
-              data: _controller.text,
-              selectable: true,
-              onTapHastag: (String name, String match) {
-                // example : #hashtag
-                // name => hashtag
-                // match => #hashtag
-              },
-              onTapMention: (String name, String match) {
-                // example : @mention
-                // name => mention
-                // match => #mention
-              },
+          SplittedMarkdownFormField(
+            decoration: InputDecoration(
+              hintText: 'Splitted Markdown FormField',
             ),
+            emojiConvert: true,
           ),
         ],
       ),
