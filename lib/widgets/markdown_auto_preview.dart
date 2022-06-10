@@ -18,6 +18,7 @@ class MarkdownAutoPreview extends StatefulWidget {
     this.minLines,
     this.emojiConvert = false,
     this.enableToolBar = true,
+    this.showEmojiSelection = true,
     this.autoCloseAfterSelectEmoji = true,
     this.textCapitalization = TextCapitalization.sentences,
     this.readOnly = false,
@@ -29,6 +30,11 @@ class MarkdownAutoPreview extends StatefulWidget {
   ///
   /// if false, toolbar widget will not display
   final bool enableToolBar;
+
+  /// Enable Emoji options
+  ///
+  /// if false, Emoji selection widget will not be displayed
+  final bool showEmojiSelection;
 
   /// Controls the text being edited.
   ///
@@ -263,6 +269,7 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
                   unfocus: () {
                     _internalFocus.unfocus();
                   },
+                  showEmojiSelection: widget.showEmojiSelection,
                   emojiConvert: widget.emojiConvert,
                   toolbarBackground: widget.toolbarBackground,
                   expandableBackground: widget.expandableBackground,

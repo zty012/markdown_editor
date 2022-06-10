@@ -22,6 +22,7 @@ class SplittedMarkdownFormField extends StatefulWidget {
     this.expands = false,
     this.emojiConvert = false,
     this.enableToolBar = true,
+    this.showEmojiSelection = true,
     this.autoCloseAfterSelectEmoji = true,
     this.textCapitalization = TextCapitalization.sentences,
     this.decoration = const InputDecoration(isDense: true),
@@ -31,6 +32,11 @@ class SplittedMarkdownFormField extends StatefulWidget {
   ///
   /// if false, toolbar widget will not display
   final bool enableToolBar;
+
+  /// Enable Emoji options
+  ///
+  /// if false, Emoji selection widget will not be displayed
+  final bool showEmojiSelection;
 
   /// Controls the text being edited.
   ///
@@ -169,7 +175,7 @@ class SplittedMarkdownFormField extends StatefulWidget {
   /// When a [controller] is specified, [initialValue] must be null (the default). If [controller] is null, then a [TextEditingController] will be constructed automatically and its text will be initialized to [initialValue] or the empty string.
   ///
   /// For documentation about the various parameters, see the [TextField] class and [TextField.new], the constructor.
-  final Function(String?)? onSaved;
+  final void Function(String?)? onSaved;
 
   @override
   State<SplittedMarkdownFormField> createState() =>
@@ -224,6 +230,8 @@ class _SplittedMarkdownFormFieldState extends State<SplittedMarkdownFormField> {
                     onSaved: widget.onSaved,
                   ),
                 ),
+                // Some padding
+                const SizedBox(width: 8.0),
                 Expanded(
                   child: MarkdownBody(
                     // key: const ValueKey<String>("zmarkdown-parse-body"),
@@ -251,6 +259,7 @@ class _SplittedMarkdownFormFieldState extends State<SplittedMarkdownFormField> {
                 onActionCompleted: () {
                   setState(() {});
                 },
+                showEmojiSelection: widget.showEmojiSelection,
               )
           ],
         );

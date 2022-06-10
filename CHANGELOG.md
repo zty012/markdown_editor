@@ -1,3 +1,6 @@
+## 0.2.11+1 - 10-June-2022
+* Minor fixes
+
 ## 0.2.11 - 10-June-2022
 * Breaking: MarkdownFormField is now MarkdownAutoPreview
 * Added SplittedMarkdown FormField
