@@ -16,6 +16,7 @@ class MarkdownAutoPreview extends StatefulWidget {
     this.expandableBackground,
     this.maxLines,
     this.minLines,
+    this.markdownSyntax,
     this.emojiConvert = false,
     this.enableToolBar = true,
     this.showEmojiSelection = true,
@@ -25,6 +26,13 @@ class MarkdownAutoPreview extends StatefulWidget {
     this.expands = false,
     this.decoration = const InputDecoration(isDense: true),
   }) : super(key: key);
+
+  /// Markdown syntax to reset the field to
+  ///
+  /// ## Headline
+  /// - some text here
+  ///
+  final String? markdownSyntax;
 
   /// For enable toolbar options
   ///
@@ -192,8 +200,6 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
     return FocusScope(
       debugLabel: 'Markdown-Form-Field-FocusNode',
       onFocusChange: (focus) {
-        // print('Focus Changed: $focus');
-
         setState(() {
           _focused = focus;
         });
@@ -219,7 +225,7 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
                 child: MarkdownBody(
                   key: const ValueKey<String>("zmarkdown-parse-body"),
                   data: _internalController.text == ""
-                      ? "Type here. . ."
+                      ? "_Markdown text_"
                       : _internalController.text,
                 ),
               ),
@@ -239,25 +245,20 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
               // show toolbar
               if (!widget.readOnly)
                 MarkdownToolbar(
+                  markdownSyntax: widget.markdownSyntax,
                   // key: const ValueKey<String>("zmarkdowntoolbar"),
                   controller: _internalController,
                   autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
                   bringEditorToFocus: () {
-                    // print('bringEditorToFocus');
-
                     if (!_textFieldFocusNode.hasFocus) {
                       setState(() {
                         _focused = true;
                       });
 
-                      // print('Brought Editor to focus');
-
                       _textFieldFocusNode.requestFocus();
                     }
                   },
                   onPreviewChanged: () {
-                    // print('onPreviewChanged');
-
                     // Remove focus first
                     _internalFocus.unfocus();
 

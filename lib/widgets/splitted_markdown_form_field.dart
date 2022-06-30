@@ -19,6 +19,8 @@ class SplittedMarkdownFormField extends StatefulWidget {
     this.validator,
     this.autovalidateMode,
     this.onSaved,
+    this.markdownSyntax,
+    this.readOnly = false,
     this.expands = false,
     this.emojiConvert = false,
     this.enableToolBar = true,
@@ -28,10 +30,24 @@ class SplittedMarkdownFormField extends StatefulWidget {
     this.decoration = const InputDecoration(isDense: true),
   }) : super(key: key);
 
+  /// Markdown syntax to reset the field to
+  ///
+  /// ## Headline
+  /// - some text here
+  ///
+  final String? markdownSyntax;
+
   /// For enable toolbar options
   ///
   /// if false, toolbar widget will not display
   final bool enableToolBar;
+
+  /// Whether the text can be changed.
+  ///
+  /// When this is set to true, the text cannot be modified by any shortcut or keyboard operation. The text is still selectable.
+  ///
+  /// Defaults to false. Must not be null.
+  final bool readOnly;
 
   /// Enable Emoji options
   ///
@@ -207,6 +223,7 @@ class _SplittedMarkdownFormFieldState extends State<SplittedMarkdownFormField> {
               children: [
                 Expanded(
                   child: TextFormField(
+                    readOnly: widget.readOnly,
                     controller: _internalController,
                     cursorColor: widget.cursorColor,
                     focusNode: _focusNode,
@@ -236,8 +253,9 @@ class _SplittedMarkdownFormFieldState extends State<SplittedMarkdownFormField> {
                   child: MarkdownBody(
                     // key: const ValueKey<String>("zmarkdown-parse-body"),
                     data: _internalController.text == ""
-                        ? "**Text in markdown**"
+                        ? "_Markdown text_"
                         : _internalController.text,
+                    selectable: true,
                   ),
                 ),
               ],
@@ -246,6 +264,7 @@ class _SplittedMarkdownFormFieldState extends State<SplittedMarkdownFormField> {
             // show toolbar
             if (widget.enableToolBar)
               MarkdownToolbar(
+                markdownSyntax: widget.markdownSyntax,
                 showPreviewButton: false,
                 // key: const ValueKey<String>("zmarkdowntoolbar"),
                 controller: _internalController,

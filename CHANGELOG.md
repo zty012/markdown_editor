@@ -1,3 +1,7 @@
+## 0.2.12 - 30-June-2022
+* Added clear and reset buttons in toolbar
+* Added readOnly option in Split Markdown Field
+
 ## 0.2.11+1 - 10-June-2022
 * Minor fixes
 

@@ -19,10 +19,12 @@ class MarkdownToolbar extends StatelessWidget {
   final bool showPreviewButton;
   final bool showEmojiSelection;
   final VoidCallback? onActionCompleted;
+  final String? markdownSyntax;
 
   MarkdownToolbar({
     Key? key,
     this.onPreviewChanged,
+    this.markdownSyntax,
     required this.controller,
     this.emojiConvert = true,
     this.unfocus,
@@ -57,6 +59,31 @@ class MarkdownToolbar extends StatelessWidget {
                 onPressedButton: onPreviewChanged,
                 tooltip: 'Show/Hide markdown preview',
               ),
+
+            // Clear the field
+            ToolbarItem(
+              key: const ValueKey<String>("toolbar_clear_action"),
+              icon: FontAwesomeIcons.trashCan,
+              onPressedButton: () {
+                controller.clear();
+                onActionCompleted?.call();
+              },
+              tooltip: 'Clear the text field',
+            ),
+
+            // Reset the text field
+            ToolbarItem(
+              key: const ValueKey<String>("toolbar_reset_action"),
+              icon: FontAwesomeIcons.arrowRotateLeft,
+              onPressedButton: () {
+                if (markdownSyntax != null) {
+                  controller.text = markdownSyntax!;
+                  onActionCompleted?.call();
+                }
+              },
+              tooltip: 'Reset the text field to specified format',
+            ),
+
             // select single line
             ToolbarItem(
               key: const ValueKey<String>("toolbar_selection_action"),
@@ -154,7 +181,7 @@ class MarkdownToolbar extends StatelessWidget {
                 ToolbarItem(
                   key: const ValueKey<String>("checkbox"),
                   icon: FontAwesomeIcons.solidSquareCheck,
-                  tooltip: 'Checked box',
+                  tooltip: 'Checked checkbox',
                   onPressedButton: () {
                     toolbar.action("- [x] ", "");
                     onActionCompleted?.call();
@@ -163,7 +190,7 @@ class MarkdownToolbar extends StatelessWidget {
                 ToolbarItem(
                   key: const ValueKey<String>("uncheckbox"),
                   icon: FontAwesomeIcons.square,
-                  tooltip: 'Unchecked box',
+                  tooltip: 'Unchecked checkbox',
                   onPressedButton: () {
                     toolbar.action("- [ ] ", "");
                     onActionCompleted?.call();
@@ -175,7 +202,7 @@ class MarkdownToolbar extends StatelessWidget {
             if (showEmojiSelection)
               ToolbarItem(
                 key: const ValueKey<String>("toolbar_emoji_action"),
-                icon: FontAwesomeIcons.solidFaceSmile,
+                icon: FontAwesomeIcons.faceSmile,
                 tooltip: 'Select emoji',
                 onPressedButton: () async {
                   await _showModalSelectEmoji(context, controller.selection);

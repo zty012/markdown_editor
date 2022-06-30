@@ -44,6 +44,7 @@ class _HomeScreenState extends State<HomeScreen> {
             // expands: true,
           ),
           SplittedMarkdownFormField(
+            markdownSyntax: '## Headline',
             decoration: InputDecoration(
               hintText: 'Splitted Markdown FormField',
             ),
