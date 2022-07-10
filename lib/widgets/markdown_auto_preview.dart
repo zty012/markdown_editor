@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import '../src/constants.dart';
 import '../src/emoji_input_formatter.dart';
+import '../src/toolbar.dart';
 import 'markdown_toolbar.dart';
 
 class MarkdownAutoPreview extends StatefulWidget {
@@ -186,19 +189,60 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
   final FocusNode _textFieldFocusNode =
       FocusNode(debugLabel: '_textFieldFocusNode');
 
+  late Toolbar _toolbar;
+
   bool _focused = false;
 
   @override
   void initState() {
     _internalController = widget.controller ?? TextEditingController();
 
+    _toolbar = Toolbar(
+      controller: _internalController,
+      bringEditorToFocus: () {
+        if (!_textFieldFocusNode.hasFocus) {
+          setState(() {
+            _focused = true;
+          });
+
+          _textFieldFocusNode.requestFocus();
+        }
+      },
+    );
+
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return FocusScope(
-      debugLabel: 'Markdown-Form-Field-FocusNode',
+    return FocusableActionDetector(
+      shortcuts: {
+        LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyB):
+            BoldTextIntent(),
+        LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyI):
+            ItalicTextIntent(),
+      },
+      actions: {
+        BoldTextIntent: CallbackAction<BoldTextIntent>(
+          onInvoke: (intent) {
+            _toolbar.action("**", "**");
+
+            // onActionCompleted
+            // setState(() {});
+            return null;
+          },
+        ),
+        ItalicTextIntent: CallbackAction<ItalicTextIntent>(
+          onInvoke: (intent) {
+            _toolbar.action("_", "_");
+
+            // onActionCompleted
+            // setState(() {});
+            return null;
+          },
+        ),
+      },
+
       onFocusChange: (focus) {
         setState(() {
           _focused = focus;
@@ -207,7 +251,7 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
         if (_focused) _internalFocus.requestFocus(_textFieldFocusNode);
       },
       // canRequestFocus: false,
-      node: _internalFocus,
+      focusNode: _internalFocus,
       child: _focused
           ? _editorOnFocused()
           : GestureDetector(
@@ -218,7 +262,7 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
                 });
 
                 // Then request for focus when widget is built
-                _internalFocus.requestFocus(_textFieldFocusNode);
+                _textFieldFocusNode.requestFocus();
               },
               child: Align(
                 alignment: Alignment.centerLeft,
@@ -249,15 +293,7 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
                   // key: const ValueKey<String>("zmarkdowntoolbar"),
                   controller: _internalController,
                   autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
-                  bringEditorToFocus: () {
-                    if (!_textFieldFocusNode.hasFocus) {
-                      setState(() {
-                        _focused = true;
-                      });
-
-                      _textFieldFocusNode.requestFocus();
-                    }
-                  },
+                  toolbar: _toolbar,
                   onPreviewChanged: () {
                     // Remove focus first
                     _internalFocus.unfocus();

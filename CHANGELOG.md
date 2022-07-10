@@ -1,3 +1,7 @@
+## 0.2.13 - 10-July-2022
+* Added shortcut Ctrl+B: Bold text
+* Added shortcut Ctrl+I: Italic text
+
 ## 0.2.12 - 30-June-2022
 * Added clear and reset buttons in toolbar
 * Added readOnly option in Split Markdown Field

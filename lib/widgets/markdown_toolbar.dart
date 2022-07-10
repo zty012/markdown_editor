@@ -15,31 +15,26 @@ class MarkdownToolbar extends StatelessWidget {
   final Toolbar toolbar;
   final Color? toolbarBackground;
   final Color? expandableBackground;
-  final VoidCallback? bringEditorToFocus;
   final bool showPreviewButton;
   final bool showEmojiSelection;
   final VoidCallback? onActionCompleted;
   final String? markdownSyntax;
 
-  MarkdownToolbar({
+  const MarkdownToolbar({
     Key? key,
     this.onPreviewChanged,
     this.markdownSyntax,
     required this.controller,
     this.emojiConvert = true,
     this.unfocus,
-    this.bringEditorToFocus,
+    required this.toolbar,
     this.autoCloseAfterSelectEmoji = true,
     this.toolbarBackground,
     this.expandableBackground,
     this.onActionCompleted,
     this.showPreviewButton = true,
     this.showEmojiSelection = true,
-  })  : toolbar = Toolbar(
-          controller: controller,
-          bringEditorToFocus: bringEditorToFocus,
-        ),
-        super(key: key);
+  }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +154,16 @@ class MarkdownToolbar extends StatelessWidget {
                     onActionCompleted?.call();
                   },
                 ),
+                ToolbarItem(
+                  key: const ValueKey<String>("h4"),
+                  icon: "H4",
+                  tooltip: 'Insert Heading 4',
+                  onPressedButton: () {
+                    toolbar.action("#### ", "");
+                    onActionCompleted?.call();
+                  },
+                ),
+                // Heading 5 onwards has same font
               ],
             ),
             // unorder list

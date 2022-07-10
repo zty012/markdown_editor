@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:markdown_editor_plus/src/toolbar.dart';
+import '../src/constants.dart';
 import '../src/emoji_input_formatter.dart';
 import 'markdown_toolbar.dart';
 
@@ -202,87 +205,121 @@ class _SplittedMarkdownFormFieldState extends State<SplittedMarkdownFormField> {
   // Internal parameter
   late TextEditingController _internalController;
   final FocusNode _focusNode = FocusNode();
+  late Toolbar _toolbar;
 
   @override
   void initState() {
     _internalController = widget.controller ?? TextEditingController();
+
+    _toolbar = Toolbar(
+      controller: _internalController,
+      bringEditorToFocus: () {
+        _focusNode.requestFocus();
+      },
+    );
 
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return LayoutBuilder(
-      builder: (context, constraints) {
-        return Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              children: [
-                Expanded(
-                  child: TextFormField(
-                    readOnly: widget.readOnly,
-                    controller: _internalController,
-                    cursorColor: widget.cursorColor,
-                    focusNode: _focusNode,
-                    inputFormatters: [
-                      if (widget.emojiConvert) EmojiInputFormatter(),
-                    ],
-                    onChanged: (value) {
-                      setState(() {});
-                      widget.onChanged?.call(value);
-                    },
-                    onTap: widget.onTap,
-                    scrollController: widget.scrollController,
-                    style: widget.style,
-                    textCapitalization: widget.textCapitalization,
-                    maxLines: widget.maxLines,
-                    minLines: widget.minLines,
-                    expands: widget.expands,
-                    decoration: widget.decoration,
-                    validator: widget.validator,
-                    autovalidateMode: widget.autovalidateMode,
-                    onSaved: widget.onSaved,
-                  ),
-                ),
-                // Some padding
-                const SizedBox(width: 8.0),
-                Expanded(
-                  child: MarkdownBody(
-                    // key: const ValueKey<String>("zmarkdown-parse-body"),
-                    data: _internalController.text == ""
-                        ? "_Markdown text_"
-                        : _internalController.text,
-                    selectable: true,
-                  ),
-                ),
-              ],
-            ),
-
-            // show toolbar
-            if (widget.enableToolBar)
-              MarkdownToolbar(
-                markdownSyntax: widget.markdownSyntax,
-                showPreviewButton: false,
-                // key: const ValueKey<String>("zmarkdowntoolbar"),
-                controller: _internalController,
-                autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
-                emojiConvert: widget.emojiConvert,
-                toolbarBackground: widget.toolbarBackground,
-                expandableBackground: widget.expandableBackground,
-                bringEditorToFocus: () {
-                  _focusNode.requestFocus();
-                },
-                onActionCompleted: () {
-                  setState(() {});
-                },
-                showEmojiSelection: widget.showEmojiSelection,
-              )
-          ],
-        );
+    return FocusableActionDetector(
+      shortcuts: {
+        LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyB):
+            BoldTextIntent(),
+        LogicalKeySet(LogicalKeyboardKey.control, LogicalKeyboardKey.keyI):
+            ItalicTextIntent(),
       },
+      actions: {
+        BoldTextIntent: CallbackAction<BoldTextIntent>(
+          onInvoke: (intent) {
+            _toolbar.action("**", "**");
+
+            // onActionCompleted
+            setState(() {});
+            return null;
+          },
+        ),
+        ItalicTextIntent: CallbackAction<ItalicTextIntent>(
+          onInvoke: (intent) {
+            _toolbar.action("_", "_");
+
+            // onActionCompleted
+            setState(() {});
+            return null;
+          },
+        ),
+      },
+      child: LayoutBuilder(
+        builder: (context, constraints) {
+          return Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      readOnly: widget.readOnly,
+                      controller: _internalController,
+                      cursorColor: widget.cursorColor,
+                      focusNode: _focusNode,
+                      inputFormatters: [
+                        if (widget.emojiConvert) EmojiInputFormatter(),
+                      ],
+                      onChanged: (value) {
+                        setState(() {});
+                        widget.onChanged?.call(value);
+                      },
+                      onTap: widget.onTap,
+                      scrollController: widget.scrollController,
+                      style: widget.style,
+                      textCapitalization: widget.textCapitalization,
+                      maxLines: widget.maxLines,
+                      minLines: widget.minLines,
+                      expands: widget.expands,
+                      decoration: widget.decoration,
+                      validator: widget.validator,
+                      autovalidateMode: widget.autovalidateMode,
+                      onSaved: widget.onSaved,
+                    ),
+                  ),
+                  // Some padding
+                  const SizedBox(width: 8.0),
+                  Expanded(
+                    child: MarkdownBody(
+                      // key: const ValueKey<String>("zmarkdown-parse-body"),
+                      data: _internalController.text == ""
+                          ? "_Markdown text_"
+                          : _internalController.text,
+                      selectable: true,
+                    ),
+                  ),
+                ],
+              ),
+
+              // show toolbar
+              if (widget.enableToolBar)
+                MarkdownToolbar(
+                  markdownSyntax: widget.markdownSyntax,
+                  showPreviewButton: false,
+                  // key: const ValueKey<String>("zmarkdowntoolbar"),
+                  controller: _internalController,
+                  autoCloseAfterSelectEmoji: widget.autoCloseAfterSelectEmoji,
+                  emojiConvert: widget.emojiConvert,
+                  toolbarBackground: widget.toolbarBackground,
+                  expandableBackground: widget.expandableBackground,
+                  toolbar: _toolbar,
+                  onActionCompleted: () {
+                    setState(() {});
+                  },
+                  showEmojiSelection: widget.showEmojiSelection,
+                )
+            ],
+          );
+        },
+      ),
     );
   }
 }
