@@ -1,58 +1,79 @@
+# Changelogs
+
 ## 0.2.13 - 10-July-2022
+
 * Added shortcut Ctrl+B: Bold text
 * Added shortcut Ctrl+I: Italic text
 
 ## 0.2.12 - 30-June-2022
+
 * Added clear and reset buttons in toolbar
 * Added readOnly option in Split Markdown Field
 
 ## 0.2.11+1 - 10-June-2022
+
 * Minor fixes
 
 ## 0.2.11 - 10-June-2022
+
 * Breaking: MarkdownFormField is now MarkdownAutoPreview
 * Added SplittedMarkdown FormField
 * Example updated
 * Added tootips in markdown toolbar
 
 ## 0.2.10
+
 * Switch between markdown and textfield using focusNode reimplemented
 * Dependency upgrade
 * Using MarkdownBody instead of MarkdownParseBody in MarkdownFormField
 
 ## 0.2.9+1
+
 * Temparory fix for buttons not working in web
 * Shift to Parsed Markdown Body and Text Field will not work
 
 ## 0.2.9
+
 * added non-scrolling markdown parser
 * improved logic for min, max lines in markdownfield
 
 ## 0.2.8+1
+
 * removed validator
 * added min, max lines and expands parameters
 
 ## 0.2.8
+
 * Added validator and decoration parameters
 
 ## 0.2.7
+
 * refactor package to `markdown_editor_plus`
 
 ## 0.2.6
+
 * Updated meta, optional update
+
 ## 0.2.5
+
 * Added background color for expandable toolbar titles too
+
 ## 0.2.4
+
 * Fixed incorrect Implementation for toolbar widget
+
 ## 0.2.3
+
 * Refactor the package name to `simple_markdown_editor_plus`
 
 ## 0.2.2
 
 * Updated the badges, just meta data update, can be ignored.
+
 ## 0.2.1
 
 * Allow custom toolbar to be passed as named paramter.
+
 ## 0.2.0
 
 * Add features auto preview WYSIWYG if the editor unfocused [#4](https://github.com/zahniar88/simple_markdown_editor/issues/4).
