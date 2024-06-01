@@ -3,7 +3,7 @@ import '../src/emoji_input_formatter.dart';
 
 class MarkdownField extends StatelessWidget {
   const MarkdownField({
-    Key? key,
+    super.key,
     this.controller,
     this.scrollController,
     this.onChanged,
@@ -20,7 +20,7 @@ class MarkdownField extends StatelessWidget {
     this.decoration =
         const InputDecoration(hintText: 'Type here...', isDense: true),
     this.padding = const EdgeInsets.all(8),
-  }) : super(key: key);
+  });
 
   /// Controls the text being edited.
   ///

@@ -8,7 +8,7 @@ import 'markdown_toolbar.dart';
 
 class MarkdownAutoPreview extends StatefulWidget {
   const MarkdownAutoPreview({
-    Key? key,
+    super.key,
     this.controller,
     this.scrollController,
     this.onChanged,
@@ -28,7 +28,7 @@ class MarkdownAutoPreview extends StatefulWidget {
     this.readOnly = false,
     this.expands = false,
     this.decoration = const InputDecoration(isDense: true),
-  }) : super(key: key);
+  });
 
   /// Markdown syntax to reset the field to
   ///

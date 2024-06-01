@@ -1,5 +1,9 @@
 # Changelogs
 
+## 0.2.14 - 1-June-2024
+
+* Adds support for Flutter 3.22
+
 ## 0.2.13 - 10-July-2022
 
 * Added shortcut Ctrl+B: Bold text

@@ -10,7 +10,7 @@ typedef MarkdownTapTagCallback = void Function(String name, String fullText);
 class MarkdownParseBody extends StatelessWidget {
   /// Creates a non-scrolling widget that parses and displays Markdown.
   const MarkdownParseBody({
-    Key? key,
+    super.key,
     required this.data,
     this.onTapLink,
     this.onTapHastag,
@@ -27,7 +27,7 @@ class MarkdownParseBody extends StatelessWidget {
     this.inlineSyntaxes,
     this.blockSyntaxes,
     this.checkboxIconSize,
-  }) : super(key: key);
+  });
 
   /// The string markdown to display.
   final String data;
@@ -102,9 +102,9 @@ class MarkdownParseBody extends StatelessWidget {
         shrinkWrap: shrinkWrap,
         syntaxHighlighter: syntaxHighlighter,
         bulletBuilder: bulletBuilder ??
-            (int number, BulletStyle style) {
+            (MarkdownBulletParameters markdownBulletParameters) {
               double? fontSize =
-                  Theme.of(context).textTheme.bodyText2?.fontSize;
+                  Theme.of(context).textTheme.bodyMedium?.fontSize;
               return Text(
                 "◉",
                 textAlign: TextAlign.center,
@@ -169,7 +169,7 @@ class MarkdownParseBody extends StatelessWidget {
                     ? FontAwesomeIcons.solidSquareCheck
                     : FontAwesomeIcons.square,
                 size: checkboxIconSize ??
-                    Theme.of(context).textTheme.bodyText2?.fontSize,
+                    Theme.of(context).textTheme.bodyMedium?.fontSize,
                 color: value ? Colors.blue[600] : Colors.grey,
               );
             },

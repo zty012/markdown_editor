@@ -21,7 +21,7 @@ class MarkdownToolbar extends StatelessWidget {
   final String? markdownSyntax;
 
   const MarkdownToolbar({
-    Key? key,
+    super.key,
     this.onPreviewChanged,
     this.markdownSyntax,
     required this.controller,
@@ -34,7 +34,7 @@ class MarkdownToolbar extends StatelessWidget {
     this.onActionCompleted,
     this.showPreviewButton = true,
     this.showEmojiSelection = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {

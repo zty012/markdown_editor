@@ -4,10 +4,10 @@ import '../src/emoji_parser.dart';
 
 class ModalSelectEmoji extends StatefulWidget {
   const ModalSelectEmoji({
-    Key? key,
+    super.key,
     this.onChanged,
     this.emojiConvert = true,
-  }) : super(key: key);
+  });
 
   final bool emojiConvert;
   final ValueChanged<String>? onChanged;

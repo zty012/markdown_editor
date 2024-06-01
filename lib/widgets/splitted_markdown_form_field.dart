@@ -8,7 +8,7 @@ import 'markdown_toolbar.dart';
 
 class SplittedMarkdownFormField extends StatefulWidget {
   const SplittedMarkdownFormField({
-    Key? key,
+    super.key,
     this.controller,
     this.scrollController,
     this.onChanged,
@@ -31,7 +31,7 @@ class SplittedMarkdownFormField extends StatefulWidget {
     this.autoCloseAfterSelectEmoji = true,
     this.textCapitalization = TextCapitalization.sentences,
     this.decoration = const InputDecoration(isDense: true),
-  }) : super(key: key);
+  });
 
   /// Markdown syntax to reset the field to
   ///

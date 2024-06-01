@@ -3,12 +3,12 @@ import 'package:markdown_editor_plus/src/toolbar.dart';
 
 class ModalInputUrl extends StatelessWidget {
   const ModalInputUrl({
-    Key? key,
+    super.key,
     required this.toolbar,
     required this.leftText,
     required this.selection,
     this.onActionCompleted,
-  }) : super(key: key);
+  });
 
   final Toolbar toolbar;
   final String leftText;
