@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+
 import '../src/constants.dart';
 import '../src/emoji_input_formatter.dart';
 import '../src/toolbar.dart';
@@ -28,6 +29,7 @@ class MarkdownAutoPreview extends StatefulWidget {
     this.readOnly = false,
     this.expands = false,
     this.decoration = const InputDecoration(isDense: true),
+    this.hintText,
   });
 
   /// Markdown syntax to reset the field to
@@ -36,6 +38,9 @@ class MarkdownAutoPreview extends StatefulWidget {
   /// - some text here
   ///
   final String? markdownSyntax;
+
+  /// Hint text to show when the field is empty
+  final String? hintText;
 
   /// For enable toolbar options
   ///
@@ -269,7 +274,7 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
                 child: MarkdownBody(
                   key: const ValueKey<String>("zmarkdown-parse-body"),
                   data: _internalController.text == ""
-                      ? "_Markdown text_"
+                      ? widget.hintText ?? "_Markdown text_"
                       : _internalController.text,
                 ),
               ),
