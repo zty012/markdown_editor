@@ -1,5 +1,10 @@
 # Changelogs
 
+## 0.2.15 - 19-June-2024
+
+* Adds hint text param in MarkdownAutoPreview widget to show hint text when content is not available, [PR#2](https://github.com/OmkarDabade/markdown_editor_plus/pull/2)
+* upgrade dependencies
+
 ## 0.2.14 - 1-June-2024
 
 * Adds support for Flutter 3.22
