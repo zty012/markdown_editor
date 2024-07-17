@@ -30,6 +30,9 @@ class MarkdownAutoPreview extends StatefulWidget {
     this.expands = false,
     this.decoration = const InputDecoration(isDense: true),
     this.hintText,
+    this.onTapLink,
+    this.onTapHastag,
+    this.onTapMention,
   });
 
   /// Markdown syntax to reset the field to
@@ -180,6 +183,15 @@ class MarkdownAutoPreview extends StatefulWidget {
   ///
   /// Defaults to false.
   final bool expands;
+  
+  /// Called when the user taps a link.
+  final MarkdownTapLinkCallback? onTapLink;
+
+  /// Called when the user taps a hashtag.
+  final MarkdownTapTagCallback? onTapHastag;
+
+  /// Called when the user taps a mention.
+  final MarkdownTapTagCallback? onTapMention;
 
   @override
   State<MarkdownAutoPreview> createState() => _MarkdownAutoPreviewState();
@@ -276,6 +288,9 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
                   data: _internalController.text == ""
                       ? widget.hintText ?? "_Markdown text_"
                       : _internalController.text,
+                  onTapLink: widget.onTapLink,
+                  onTapHastag: widget.onTapHastag,
+                  onTapMention: widget.onTapMention,
                 ),
               ),
             ),
