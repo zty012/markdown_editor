@@ -1,4 +1,4 @@
-import 'package:flutter/material.dart';
+_plusimport 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 
@@ -6,6 +6,8 @@ import '../src/constants.dart';
 import '../src/emoji_input_formatter.dart';
 import '../src/toolbar.dart';
 import 'markdown_toolbar.dart';
+
+typedef MarkdownTapTagCallback = void Function(String name, String fullText);
 
 class MarkdownAutoPreview extends StatefulWidget {
   const MarkdownAutoPreview({
@@ -31,8 +33,6 @@ class MarkdownAutoPreview extends StatefulWidget {
     this.decoration = const InputDecoration(isDense: true),
     this.hintText,
     this.onTapLink,
-    this.onTapHastag,
-    this.onTapMention,
   });
 
   /// Markdown syntax to reset the field to
@@ -187,12 +187,6 @@ class MarkdownAutoPreview extends StatefulWidget {
   /// Called when the user taps a link.
   final MarkdownTapLinkCallback? onTapLink;
 
-  /// Called when the user taps a hashtag.
-  final MarkdownTapTagCallback? onTapHastag;
-
-  /// Called when the user taps a mention.
-  final MarkdownTapTagCallback? onTapMention;
-
   @override
   State<MarkdownAutoPreview> createState() => _MarkdownAutoPreviewState();
 }
@@ -289,8 +283,6 @@ class _MarkdownAutoPreviewState extends State<MarkdownAutoPreview> {
                       ? widget.hintText ?? "_Markdown text_"
                       : _internalController.text,
                   onTapLink: widget.onTapLink,
-                  onTapHastag: widget.onTapHastag,
-                  onTapMention: widget.onTapMention,
                 ),
               ),
             ),
